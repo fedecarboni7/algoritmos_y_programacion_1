@@ -3,6 +3,8 @@
 def num_primo(num):
     if(num == 1):
         return True
+    elif(num == 2):
+        return False
     else:
         for i in range(2, num):
             if (num % i == 0):
