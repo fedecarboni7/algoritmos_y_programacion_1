@@ -1,10 +1,8 @@
 # Escribir un programa modular, que solicite el ingreso de un valor, e informe si se trata de un número primo.
 
 def num_primo(num):
-    if(num == 1):
+    if(num == 1 or num == 2):
         return True
-    elif(num == 2):
-        return False
     else:
         for i in range(2, num):
             if (num % i == 0):
