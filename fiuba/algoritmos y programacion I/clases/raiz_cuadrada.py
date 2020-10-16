@@ -14,6 +14,7 @@ def raiz(num, error):
 
 
 def main():
+    print("")
     num = int(input("Ingrese valor: "))
     error = float(input("Ingrese valor de error a tolerar: "))
     print("La raíz cuadrada de", num, "es:", raiz(num, error))
