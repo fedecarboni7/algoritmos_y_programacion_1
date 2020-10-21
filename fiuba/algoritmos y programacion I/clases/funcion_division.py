@@ -7,9 +7,10 @@ def division(dividendo, divisor):
 
 
 def main():
+    print("")
     dividendo = int(input("Ingrese valor de dividendo: "))
     divisor = int(input("Ingrese valor de divisor: "))
-    print(division(dividendo, divisor))
+    print(dividendo, "dividido", divisor, "es:",division(dividendo, divisor))
 
 
 #main()

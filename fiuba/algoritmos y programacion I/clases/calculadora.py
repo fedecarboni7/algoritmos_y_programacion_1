@@ -1,9 +1,9 @@
-#REVISAAAR
 import raiz_cuadrada
 import funcion_division
 
 
 def mostrar_menu():
+    print("")
     print("1. Cálculo de raiz")
     print("2. Cálculo de división")
     print("3. Salir")
@@ -12,13 +12,12 @@ def mostrar_menu():
 
 
 def menu(opcion):
-    mostrar_menu()
-    while(opcion != 3):
-        if(opcion == 1):
-            raiz_cuadrada.main()
-        elif(opcion == 2):
-            funcion_division.main()
-        menu(opcion)
+    if(opcion == 1):
+        raiz_cuadrada.main()
+        menu(mostrar_menu())
+    elif(opcion == 2):
+        funcion_division.main()
+        menu(mostrar_menu())
     return
 
 
