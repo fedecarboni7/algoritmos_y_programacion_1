@@ -1,0 +1,37 @@
+Ejercicio 1:
+Escribir un programa, que permita el ingreso de una contraseña y la valide:
+La palabra clave debe contener por lo menos 10 caracteres
+Debe estar formada solo por caracteres alfabéticos
+Al menos debe tener una letra mayúscula y una letra minúscula
+Si desea cancelar el ingreso de la misma debe ingresar Enter con cadena vacía
+
+Ejercicio 2:
+Modificar el programa anterior para que además de las condiciones anteriores la clave deba incluir al menos un caracter numérico y  alguno de los siguientes caracteres especiales ‘#_&/()=’
+
+Ejercicio 3:
+Escribir otro programa, que permita el ingreso de una contraseña y la valide:
+La palabra clave debe contener por lo menos 10 caracteres
+Debe estar formada solo por caracteres alfabéticos y números.
+Al menos debe tener una letra mayúscula, una letra minúscula y un número.
+En caso que la contraseña ingresada no sea válida debe mostrar los motivos por los cuales  debe volver a re-ingresarla.
+Si desea cancelar el ingreso de la misma debe ingresar Enter con cadena vacía
+
+Ejercicio 4:
+Escribir una función que reciba una dirección de mail (cadena de caracteres) y valide si dicha dirección es válida devolviendo True si lo es ó False en caso contrario
+Para determinar si la misma es válida debe cumplir las siguientes condiciones:
+1) No debe contener blancos
+2) El nombre (la parte anterior al @) solo debe estar compuesta por letras y/o números
+3) El dominio puede ser solo cualquiera de los siguientes dos: fi.uba.ar ó gmail.com
+
+Ejercicio 5:
+Escribir un programa que solicite el ingreso de palabras ó frases,  y a medida que se ingresan informar si se trata de un palíndromo.
+Validar que la palabra ó frase ingresada, sólo este formada por caracteres alfabéticos y por espacios en blanco.
+El ingreso de las palabras ó frases, terminará cuando el usuario de enter, sin ingresar nada.
+La solución debe ser estructurada en funciones, que sigan los lineamientos de la programación estructurada.
+Un palíndromo es una palabra o frase que es igual si se lee de izquierda a derecha que de derecha a izquierda. 
+
+Ejemplos:   Ana, ala, Neuquén, Oro, seres, radar
+                        Arriba la birra
+                        Amar da drama
+                        Luz azul
+                        La ruta natural
