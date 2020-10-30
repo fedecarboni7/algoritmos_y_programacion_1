@@ -14,5 +14,5 @@ Pruebe con los siguientes ejemplos:
 def palabras():
     cadenaPalabras = input("Ingresar cadena de palabras:")
     listaPalabras = cadenaPalabras.split()
-    return(len(listaPalabras))
+    return(listaPalabras)
 print(palabras())

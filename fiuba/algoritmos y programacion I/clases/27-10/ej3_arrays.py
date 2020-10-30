@@ -3,3 +3,6 @@ lista = []
 for i in range(1,6):
     lista += [[i,i**2,i**3]]
 print(lista)
+
+# otra forma, por comprensión
+# lista = [x, x**2, x**3] for x in range(1,6)
