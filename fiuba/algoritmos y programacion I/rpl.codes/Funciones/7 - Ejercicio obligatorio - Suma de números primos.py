@@ -1,5 +1,12 @@
+def suma_de_numeros_primos(numero):
+    suma = 0
+    for i in range(1, numero + 1):
+        if es_primo(i):
+            suma += i
+    return suma
+
+
 def es_primo(numero):
-    # tu codigo
     condicion = False
     if(numero == 2):
         condicion = True
