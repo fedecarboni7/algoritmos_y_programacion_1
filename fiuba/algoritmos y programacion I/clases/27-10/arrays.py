@@ -40,7 +40,7 @@ print(len(lista_vacia))
 print(lista[0:4])
 print(lista[2:])
 
-#para elimninar un parte especifica de la lista
+#para eliminar un parte especifica de la lista
 lista3 = ["primer",1,2,3,4,5,6,7]
 
 lista3[2:4] = []
