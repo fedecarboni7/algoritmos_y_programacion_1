@@ -1,4 +1,4 @@
-def palabra_mas_larga2(texto):
+def palabra_mas_larga(texto):
     palabra_larga = ""
     inicio_palabra = 0
     for i in range(0, len(texto)):
