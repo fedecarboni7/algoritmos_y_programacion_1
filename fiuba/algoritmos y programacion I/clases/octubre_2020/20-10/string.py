@@ -6,7 +6,7 @@ print(len(palabra)) #cantidad de caracteres
 print(palabra.upper()) #convierte a mayuscula
 print(palabra.count("o")) #cantidad de letras
 print(palabra.index("t")) #devuelve la posición del caracter seleccionado
-print(palabra.find("ori")) #devuelve la posición en la que comienza la subcadena, ó -1 sino está incluida
+print(palabra.find("ori")) #devuelve la posición en la que comienza la subcadena, ó -1 si no está incluida
 print(palabra.isalpha()) #devuelve true si esta compuesto por letras solamente
 print(palabra.isnumeric()) #devuelve true si está compuesto por numeros solamente
 print(palabra.isalnum()) #devuelve true si esta compuesto por letras y/o numeros
