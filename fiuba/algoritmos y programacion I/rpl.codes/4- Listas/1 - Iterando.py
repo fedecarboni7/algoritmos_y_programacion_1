@@ -40,11 +40,20 @@ def esta_ordenada(lista):
 
 def producto_escalar(vector_1, vector_2):
     suma = 0
-    for v1, v2 in (vector_1, vector_2):
+    for (v1, v2) in zip(vector_1, vector_2):
         suma += v1 * v2
     return suma
 
-print(producto_escalar([2,5,3], [4,6,7]))
+"""
+letras_en_palabras: Recibe una lista de letras y una cadena. La lista contiene en cada índice de la misma una letra (string de longitud 1). Retorna True caso de que todas las letras se encuentren en la palabra, False en caso contrario.
+
+Ejemplos:
+
+    letras_en_palabras(["a","h","e"], "hola como estas") => True
+    letras_en_palabras(["a","h","e"], "ola como estas") => Falsa
+"""
 
 def letras_en_palabra(letras, frase):
-    pass
+    for l in letras:
+        for c in frase:
+            if l 
