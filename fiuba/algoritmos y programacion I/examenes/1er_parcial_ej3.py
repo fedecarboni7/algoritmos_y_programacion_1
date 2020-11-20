@@ -1,3 +1,6 @@
+# Versión enviada en el parcial
+# Lamentablemente no funciona como debería. El código con funcionamiento correcto se encuentra en la version 2.0 de este ejercicio
+
 tiempos = {}
 tiempos["Hamilton"] = [6115, 113, 52]
 tiempos["Bottas"] = [3610, 115, 30]
