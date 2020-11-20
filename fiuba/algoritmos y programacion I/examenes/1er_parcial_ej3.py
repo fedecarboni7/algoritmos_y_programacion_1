@@ -30,10 +30,6 @@ def abandonaron(tiempos):
     return print(cant_pilotos_abandonan >= 3)
 
 
-puntos = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1]
-vuelta_mas_rapida = 1
-
-
 def lista_ordenada(tiempos, puntos, vuelta_mas_rapida):
     lista = []
     tiempo_vuelta_min = 1000
