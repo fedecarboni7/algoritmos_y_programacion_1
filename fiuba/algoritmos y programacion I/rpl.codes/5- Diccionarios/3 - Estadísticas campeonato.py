@@ -9,7 +9,7 @@ def equipo_ganador(campeonato):
         if puntos_equipo_actual > max_puntos_totales:
             max_puntos_totales = puntos_equipo_actual
             equipo_campeon = equipo
-    return print("El equipo campeon es {} con {} puntos.".format(equipo_campeon, max_puntos_totales))
+    return print(f"El equipo campeon es {equipo_campeon} con {max_puntos_totales} puntos.")
 
 
 def equipo_perdedor(campeonato):
@@ -20,7 +20,7 @@ def equipo_perdedor(campeonato):
         if puntos_equipo_actual < min_puntos_totales:
             min_puntos_totales = puntos_equipo_actual
             equipo_desciende = equipo
-    return print("El equipo que desciende es {} con {} puntos.".format(equipo_desciende, min_puntos_totales))
+    return print(f"El equipo que desciende es {equipo_desciende} con {min_puntos_totales} puntos.")
 
 
 def mas_empates(campeonato):
@@ -30,7 +30,7 @@ def mas_empates(campeonato):
         if empates > max_empates:
             max_empates = empates
             equipo_max_empates = equipo
-    return print("El equipo que mas partidos empato es {} con {} partidos.".format(equipo_max_empates, max_empates))
+    return print(f"El equipo que mas partidos empato es {equipo_max_empates} con {max_empates} partidos.")
 
 
 def ratio_goles(campeonato):
@@ -40,7 +40,7 @@ def ratio_goles(campeonato):
         if ratio_goles_equipo > max_ratio_goles:
             max_ratio_goles = ratio_goles_equipo
             equipo_max_ratio = equipo
-    return print("El equipo con mejor proporcion goleadora es {} con {}.".format(equipo_max_ratio, max_ratio_goles))
+    return print(f"El equipo con mejor proporcion goleadora es {equipo_max_ratio} con {max_ratio_goles}.")
 
 
 def mostrar_estadisticas():
@@ -48,6 +48,3 @@ def mostrar_estadisticas():
     equipo_perdedor(campeonato)
     mas_empates(campeonato)
     ratio_goles(campeonato)
-
-
-mostrar_estadisticas()
