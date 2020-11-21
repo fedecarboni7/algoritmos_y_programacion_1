@@ -1,0 +1,23 @@
+‘Se acaba de correr una carrera de F1 de 52 vueltas. Sabemos que corrieron a lo sumo 20 pilotos.
+
+Los datos estan cargados en un diccionario en donde el nombre del piloto es la clave a la que se le asocian tres valores
+enteros que representan la duración de la carrera, la de la vuelta mas rapida y la cantidad de vueltas que realizó,
+respectivamente.
+
+Los dos primeros datos estan dados en segundos
+Ejemplo:
+
+Hamilton,6115,113,52
+
+Vettel,4720,112,40
+
+Significa que Hamilton completé la carrera en 6115 segundos, su vuelta mas rapida fue de 113 segundos y finaliz6 la
+carrera ya que hizo las 52 vueltas. Vettel tuvo su vuelta mas rapida en 112 segundos pero no finalizé la carrera, ya que
+completé solo 40 vueltas
+
+Se pide, hacer un programa en Python que:
+a) Tenga una función booleana que indique verdadero si abandonaron tres o mas pilotos, falso de lo contrario.
+
+b) En base a la lista de puntos por posición (el primero 25, el segundo 18, etc.) generar y mostrar una lista ordenada en
+forma descendente indicando: piloto, puntaje. Para simplificar, solo reciben puntos los pilotos que hayan finalizado la carrera, salvo que sea el piloto que hizo la vuelta mas rapida quien recibirá un punto extra haya o no finalizado la
+carrera.

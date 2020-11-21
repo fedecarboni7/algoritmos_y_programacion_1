@@ -16,43 +16,61 @@ tiempos["Kvyat"] = [700, 119, 5]
 tiempos["Hulkenberg"] = [6201, 118, 52]
 tiempos["Raikkonen"] = [6133, 114, 52]
 tiempos["Giovinazzi"] = [1205, 118, 10]
-tiempos["Grosjean"] = [6130, 115, 52]
+tiempos["Grosjean"] = [6130, 11, 52]
 
 puntos = [25, 18, 15, 12, 10, 8, 6, 4, 2, 1]
 vuelta_mas_rapida = 1
+total_vueltas = 52
+
+
+def termino_carrera(vueltas):
+    return vueltas >= total_vueltas
 
 
 def abandonaron(tiempos):
     cant_pilotos_abandonan = 0
     for piloto in tiempos:
-        if tiempos[piloto][2] < 52:
+        if not termino_carrera(tiempos[piloto][2]):
             cant_pilotos_abandonan += 1
     return cant_pilotos_abandonan >= 3
 
 
-def lista_ordenada(tiempos, puntos, vuelta_mas_rapida):
-    lista = []
-    tiempo_vuelta_min = 1000
-    for piloto in tiempos:
-        if tiempos[piloto][2] == 52:
-            lista += [[piloto, tiempos[piloto][0]]]
-    lista.sort(key=lambda i: i[1], reverse=False)
-    lista = lista[0:10]
-    for piloto in tiempos:
-        if tiempos[piloto][1] < tiempo_vuelta_min:
-            tiempo_vuelta_min = tiempos[piloto][1]
-            tiempo_total_piloto = tiempos[piloto][0]
+def encontrar_piloto_vuelta_mas_rapida(tiempos):
+    pilotos = list(tiempos.items())
+    piloto_vuelta_mas_rapida = pilotos[0]
+    for piloto in pilotos:
+        if piloto[1][1] < piloto_vuelta_mas_rapida[1][1]:
             piloto_vuelta_mas_rapida = piloto
-    if [piloto_vuelta_mas_rapida, tiempo_total_piloto] not in lista:
-        lista += [[piloto_vuelta_mas_rapida, vuelta_mas_rapida]]
-    for i in range(0, len(puntos)):
-        lista[i][1] = puntos[i]
-        if lista[i][0] == piloto_vuelta_mas_rapida:
-            lista[i][1] += vuelta_mas_rapida
-    return lista
+    return piloto_vuelta_mas_rapida
+
+
+def lista_ordenada_pilotos_top(tiempos, top):
+    pilotos = list(dict(filter(lambda piloto: termino_carrera(piloto[1][2]), tiempos.items())).items())
+    pilotos.sort(key=lambda tupla: tupla[1][0])
+    return pilotos[0:top]
+
+
+def calcular_puntaje(tiempos, puntos, vuelta_mas_rapida):
+    pilotos = lista_ordenada_pilotos_top(tiempos, len(puntos))
+    piloto_vuelta_mas_rapida = encontrar_piloto_vuelta_mas_rapida(tiempos)
+    lista_puntajes = []
+    cant_puntos = len(puntos) if len(puntos) >= len(pilotos) else len(pilotos)
+    for i in range(0, cant_puntos):
+        if pilotos[i] == piloto_vuelta_mas_rapida:
+            lista_puntajes.append((pilotos[i][0],puntos[i] + vuelta_mas_rapida))
+        else:
+            lista_puntajes.append((pilotos[i][0], puntos[i]))
+    if piloto_vuelta_mas_rapida not in pilotos:
+        lista_puntajes.append((piloto_vuelta_mas_rapida[0], vuelta_mas_rapida))
+    return lista_puntajes
+
+def mostrar_puntaje(lista_puntajes):
+    for puntaje in lista_puntajes:
+        print(puntaje[0], puntaje[1])
 
 def main():
     print(abandonaron(tiempos))
-    print(lista_ordenada(tiempos, puntos, vuelta_mas_rapida))
+    mostrar_puntaje(calcular_puntaje(tiempos, puntos, vuelta_mas_rapida))
+
 
 main()
