@@ -17,36 +17,51 @@ b) Un listado ordenado de mayor a menor por porcentaje de desocupación. Debe te
 
 '''
 
+
 def solicitar_valor(mensaje):
     valor = input(mensaje)
     return valor
+
 
 def cargar_diccionario():
     market_stats = {}
     seguir = "s"
     while seguir == "s":
         localidad = solicitar_valor("Ingrese localidad: ")
-        personas_mayores = int(solicitar_valor("Ingrese la cantidad de personas que pueden trabajar: "))
+        personas_mayores = int(solicitar_valor(
+            "Ingrese la cantidad de personas que pueden trabajar: "))
         empleados = int(solicitar_valor("Ingrese la cantidad de empleados: "))
         if localidad not in market_stats:
             desocupacion = (1 - empleados / personas_mayores) * 100
             market_stats[localidad] = [personas_mayores, empleados, desocupacion]
         else:
-            market_stats[localidad] += [personas_mayores, empleados, 0]
-            market_stats[localidad][2] = (1 - market_stats[localidad][1] / market_stats[localidad][0]) * 100
+            market_stats[localidad][0] += personas_mayores
+            market_stats[localidad][1] += empleados
+            desocupacion = (1 - market_stats[localidad][1] / market_stats[localidad][0]) * 100
+            market_stats[localidad][2] = desocupacion
         seguir = solicitar_valor("Desea seguir ingresando?(s/n): ")
     return market_stats
 
-def ordenar_dicc(dicc):
+
+def ordenar_desocupacion(dicc):
     lista_market = dicc.items()
-    return sorted(lista_market, key=lambda l: l[1][2])
+    return sorted(lista_market, key=lambda l: l[1][2], reverse=True)
+
 
 def mostrar_estadisticas(datos):
     for localidad, lista in datos:
-        for personas_mayores, empleados, desocupacion in lista:
-            print(f"En la localidad de {localidad} hay {personas_mayores} personas en edad laboral y {empleados} trabajando.")
-            print(f"La tasa de desocupacion en {localidad} es {desocupacion}%.")
+        personas_mayores = lista[0]
+        empleados = lista[1]
+        print(f"En la localidad de {localidad} hay {personas_mayores} personas en edad laboral y {empleados} trabajando.")
+    return
+
+def mostrar_desocupacion(datos):
+    for localidad, lista in datos:
+        desocupacion = lista[2]
+        print(f"La tasa de desocupacion en {localidad} es {desocupacion:.1f}%.")
+
 
 dicc = cargar_diccionario()
-lista_datos = ordenar_dicc(dicc)
+lista_datos = dicc.items()
 mostrar_estadisticas(lista_datos)
+mostrar_desocupacion(ordenar_desocupacion(dicc))
