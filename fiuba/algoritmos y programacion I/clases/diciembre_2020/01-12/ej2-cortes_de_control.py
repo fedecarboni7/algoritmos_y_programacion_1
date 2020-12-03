@@ -1,5 +1,5 @@
-def leer_info(fh):
-    linea = fh.readline()
+def leer_info(movs):
+    linea = movs.readline()
     if linea:
         registro = linea.rstrip("\n").split(",")
     else:
@@ -8,16 +8,16 @@ def leer_info(fh):
 
 
 movsbane= open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\moviBANE.txt", 'rt') 
-movshb = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\MoviHB.txt", 'rt') 
-movssuc = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\MoviSUC.txt", 'rt') 
+movshb = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\moviHB.txt", 'rt') 
+movssuc = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\moviSUC.txt", 'rt') 
 max = '999999'
 bane_cta, bane_importe = leer_info(movsbane)
 hb_cta, hb_importe = leer_info(movshb)
 suc_cta, suc_importe = leer_info(movssuc)
 total = 0
-while bane_cta != max or hb_cta != max or  suc_cta != max:
+while bane_cta != max or hb_cta != max or suc_cta != max:
     tot_cta = 0
-    men = min(hb_cta, bane_cta, suc_cta)  # min es una función de python
+    men = str(min(int(hb_cta), int(bane_cta), int(suc_cta))) # min es una función de python para tomar el minimo de los valores p.p.p.
     print('cta:', men)
     while bane_cta == men and bane_cta!= max:
         tot_cta += int(bane_importe)
