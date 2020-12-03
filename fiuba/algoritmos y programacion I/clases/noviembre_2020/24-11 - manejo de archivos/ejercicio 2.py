@@ -15,8 +15,7 @@ def leer_archivo(archivo):
 
 def mostrar_datos(nro, nom_ape, saldo_original, saldo_actualizado):
     print("Cliente: {0} - {1}".format(nro, nom_ape))
-    print("Saldo original: {0:5d} - Saldo actualizado: {1:5d}\n".format(
-        saldo_original, saldo_actualizado))
+    print("Saldo original: {0:5d} - Saldo actualizado: {1:5d}\n".format(saldo_original, saldo_actualizado))
     return
 
 
@@ -38,11 +37,8 @@ def procesar_archivo(fmaestro, fmaestro_nuevo):
 
 ################### Bloque Principal ###################
 
-
-fmaestro = open(
-    "C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\maestro.csv")
-fmaestro_nuevo = open(
-    "C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\maenuevo.csv", "w")
+fmaestro = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\maestro.csv")
+fmaestro_nuevo = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\maenuevo.csv", "w")
 procesar_archivo(fmaestro, fmaestro_nuevo)
 fmaestro.close()
 fmaestro_nuevo.close()

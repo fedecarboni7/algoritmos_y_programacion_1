@@ -9,7 +9,7 @@ Se pide:
 1- generar un archivo con igual formato y orden  que los  anteriores  que contenga un resumen  de 
 los registros de los 3 archivos de entrada por Código de producto, y ordenado por dicho código.)un registro 
 por codigo)
-2-Stock actual de cada producto (suponer que se comienza con  cero productos).'''
+2-Stock actual de cada producto (suponer que se comienza con cero productos).'''
 
 movimientos1 = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\mov1.txt", 'rt')
 movimientos2 = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\mov2.txt", 'rt')
@@ -18,17 +18,14 @@ movimientos_tot = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algor
 max = "999999"
 
 def leer_info(fh):
-    
     linea = fh.readline()
-    
     if linea:
         registro = linea.rstrip('\n').split(',')
     else:
-        registro = ["999999", "0", "0"]  
-        
+        registro = ["999999", "0", "0"]
     return registro
 
-def while_variable(codigo,importe,ventas,movimientos, importe_tot, ventas_tot):
+def while_variable(codigo, importe, ventas, movimientos, importe_tot, ventas_tot):
     while codigo == men and codigo != max:
         importe_tot += int(importe)
         ventas_tot += int(ventas)
@@ -44,11 +41,11 @@ while codigo1 != max or codigo2 != max or  codigo3 != max:
     movimientos_tot.seek(0,2)
     men = min(codigo1, codigo2, codigo3)  # min es una función de python
     
-    codigo1, importe1, ventas1, importe_tot, ventas_tot = while_variable(codigo1,importe1,ventas1,movimientos1,importe_tot, ventas_tot)
+    codigo1, importe1, ventas1, importe_tot, ventas_tot = while_variable(codigo1, importe1, ventas1, movimientos1, importe_tot, ventas_tot)
     
-    codigo2, importe2, ventas2, importe_tot, ventas_tot = while_variable(codigo2,importe2,ventas2,movimientos2,importe_tot, ventas_tot)
+    codigo2, importe2, ventas2, importe_tot, ventas_tot = while_variable(codigo2, importe2, ventas2, movimientos2, importe_tot, ventas_tot)
     
-    codigo3, importe3, ventas3, importe_tot, ventas_tot = while_variable(codigo3,importe3,ventas3,movimientos3,importe_tot, ventas_tot)
+    codigo3, importe3, ventas3, importe_tot, ventas_tot = while_variable(codigo3, importe3, ventas3, movimientos3, importe_tot, ventas_tot)
     
     print('Codigo:', men, "importe", importe_tot, "ventas", ventas_tot, "stock", importe_tot-ventas_tot)
     
