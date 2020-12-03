@@ -19,5 +19,5 @@ Se pide, hacer un programa en Python que:
 a) Tenga una función booleana que indique verdadero si abandonaron tres o mas pilotos, falso de lo contrario.
 
 b) En base a la lista de puntos por posición (el primero 25, el segundo 18, etc.) generar y mostrar una lista ordenada en
-forma descendente indicando: piloto, puntaje. Para simplificar, solo reciben puntos los pilotos que hayan finalizado la carrera, salvo que sea el piloto que hizo la vuelta mas rapida quien recibirá un punto extra haya o no finalizado la
-carrera.
+forma descendente indicando: piloto, puntaje. Para simplificar, solo reciben puntos los pilotos que hayan finalizado la carrera, 
+salvo que sea el piloto que hizo la vuelta mas rapida quien recibirá un punto extra haya o no finalizado la carrera.
