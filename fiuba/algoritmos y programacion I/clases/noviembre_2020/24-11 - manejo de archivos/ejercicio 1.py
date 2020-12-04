@@ -20,23 +20,20 @@ def leer(ar_ventas):
 
 
 def listar_archivo():
-    ar_ventas = open(
-        "C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\ventas.csv", 'r')
+    ar_ventas = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\ventas.csv", 'r')
     cod_suc, cod_art, cant, imp = leer(ar_ventas)
     cant = int(cant)
     imp = float(imp)
     cant_total_gral = imp_total_gral = 0
     # Lectura Total del archivo linea a linea
     while cod_suc:
-        print('{0:4}\t{1:5}\t{2:5}\t{3:8.2f}'.format(
-            cod_suc, cod_art, cant, imp))
+        print('{0:4}\t{1:5}\t{2:5}\t{3:8.2f}'.format(cod_suc, cod_art, cant, imp))
         cant_total_gral += cant
         imp_total_gral += imp
         cod_suc, cod_art, cant, imp = leer(ar_ventas)
         cant = int(cant)
         imp = float(imp)
-    print("Total General:\t{0:5}\t{1:8.2f} ".format(
-        cant_total_gral, imp_total_gral))
+    print("Total General:\t{0:5}\t{1:8.2f} ".format(cant_total_gral, imp_total_gral))
     ar_ventas.close()
     return
 
