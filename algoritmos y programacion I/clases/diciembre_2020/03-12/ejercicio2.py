@@ -30,14 +30,11 @@
 # 80307,70.10,8.0
 
 def leer_registro(fh):
-    
     linea = fh.readline()
-    
     if linea:
         registro = linea.rstrip('\n').split(',')
     else:
         registro = '99999','99.99',''
-        
     return registro
 
 def generar_archivo_promedios():
@@ -46,8 +43,8 @@ def generar_archivo_promedios():
     evaluaciones_pre_fh = open('C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\evaluaciones_pre.csv','r')
     promedios_fh        = open('C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\promedios.csv','w')
     
-    padron_web,materia_web,nota_web = leer_registro(evaluaciones_web_fh)
-    padron_pre,materia_pre,nota_pre = leer_registro(evaluaciones_pre_fh)
+    padron_web, materia_web, nota_web = leer_registro(evaluaciones_web_fh)
+    padron_pre, materia_pre, nota_pre = leer_registro(evaluaciones_pre_fh)
     
     while padron_web != '99999' or padron_pre != '99999':
         
@@ -64,7 +61,7 @@ def generar_archivo_promedios():
             menor_total_notas += float(nota_web)
             menor_cant_notas  += 1
             
-            padron_web,materia_web,nota_web = leer_registro(evaluaciones_web_fh)
+            padron_web, materia_web, nota_web = leer_registro(evaluaciones_web_fh)
             
             clave_web = padron_web + materia_web
             
@@ -73,14 +70,14 @@ def generar_archivo_promedios():
             menor_total_notas += float(nota_pre)
             menor_cant_notas  += 1
             
-            padron_pre,materia_pre,nota_pre = leer_registro(evaluaciones_pre_fh)
+            padron_pre, materia_pre, nota_pre = leer_registro(evaluaciones_pre_fh)
             
             clave_pre = padron_pre + materia_pre
         
         promedio = menor_total_notas / menor_cant_notas
         
-        menor_padron  = menor[0:4]
-        menor_materia = menor[4:9]
+        menor_padron  = menor[0:5]
+        menor_materia = menor[5:10]
             
         promedios_fh.write('{},{},{}\n'.format(menor_padron,menor_materia,promedio))
     

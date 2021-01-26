@@ -1,20 +1,9 @@
-#En proceso...
-
 """
 La aplicación debe tener un menú principal para manejar: 
 1.Usuarios 2.Películas 3.Recomendaciones 4.Salir
 
 Ejemplo de menu:
 """
-
-def usuarios():
-    return None
-
-def peliculas():
-    return None
-
-def recomendaciones():
-    return None
 
 def mostrar_menu():
     print(f"\nMenú Principal\n")
@@ -39,5 +28,15 @@ def menu(opcion):
         print(f"\nIngrese una opción del 1 al 4")
         menu(mostrar_menu())
     return
+
+def usuarios():
+    return None
+
+def peliculas():
+    return None
+
+def recomendaciones():
+    return None
+
 
 menu(mostrar_menu())
