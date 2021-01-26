@@ -1,9 +1,4 @@
-"""
-La aplicación debe tener un menú principal para manejar: 
-1.Usuarios 2.Películas 3.Recomendaciones 4.Salir
-
-Ejemplo de menu:
-"""
+import pickle
 
 def mostrar_menu():
     print(f"\nMenú Principal\n")
