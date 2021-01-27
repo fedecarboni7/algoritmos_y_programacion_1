@@ -37,8 +37,10 @@ def procesar_archivo(fmaestro, fmaestro_nuevo):
 
 ################### Bloque Principal ###################
 
-fmaestro = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\maestro.csv")
-fmaestro_nuevo = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\maenuevo.csv", "w")
+ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\archivos (csv, txt, bin)\\ejercicio_clientes\\"
+
+fmaestro = open(f"{ruta}maestro.csv")
+fmaestro_nuevo = open(f"{ruta}maenuevo.csv", "w")
 procesar_archivo(fmaestro, fmaestro_nuevo)
 fmaestro.close()
 fmaestro_nuevo.close()

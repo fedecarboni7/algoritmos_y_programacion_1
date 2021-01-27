@@ -39,9 +39,11 @@ def leer_registro(fh):
 
 def generar_archivo_promedios():
     
-    evaluaciones_web_fh = open('C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\evaluaciones_web.csv','r')
-    evaluaciones_pre_fh = open('C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\evaluaciones_pre.csv','r')
-    promedios_fh        = open('C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\promedios.csv','w')
+    ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\archivos (csv, txt, bin)\\ejercicio_evaluaciones\\"
+
+    evaluaciones_web_fh = open(f'{ruta}evaluaciones_web.csv','r')
+    evaluaciones_pre_fh = open(f'{ruta}evaluaciones_pre.csv','r')
+    promedios_fh        = open(f'{ruta}promedios.csv','w')
     
     padron_web, materia_web, nota_web = leer_registro(evaluaciones_web_fh)
     padron_pre, materia_pre, nota_pre = leer_registro(evaluaciones_pre_fh)

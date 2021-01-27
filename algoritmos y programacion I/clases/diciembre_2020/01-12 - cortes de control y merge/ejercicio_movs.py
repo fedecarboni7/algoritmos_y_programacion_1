@@ -11,10 +11,12 @@ los registros de los 3 archivos de entrada por Código de producto, y ordenado p
 por codigo)
 2-Stock actual de cada producto (suponer que se comienza con cero productos).'''
 
-movimientos1 = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\mov1.txt", 'rt')
-movimientos2 = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\mov2.txt", 'rt')
-movimientos3 = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\mov3.txt", 'rt')
-movimientos_tot = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\mov_totales.txt", 'r+')
+ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\archivos (csv, txt, bin)\\ejercicio_movs\\"
+
+movimientos1 = open(f"{ruta}mov1.txt", 'rt')
+movimientos2 = open(f"{ruta}mov2.txt", 'rt')
+movimientos3 = open(f"{ruta}mov3.txt", 'rt')
+movimientos_tot = open(f"{ruta}mov_totales.txt", 'r+')
 max = "999999"
 
 def leer_info(fh):

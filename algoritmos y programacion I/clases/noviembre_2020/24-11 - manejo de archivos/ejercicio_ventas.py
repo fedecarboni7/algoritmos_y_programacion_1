@@ -20,7 +20,7 @@ def leer(ar_ventas):
 
 
 def listar_archivo():
-    ar_ventas = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\ventas.csv", 'r')
+    ar_ventas = open("C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\archivos (csv, txt, bin)\\ventas.csv", 'r')
     cod_suc, cod_art, cant, imp = leer(ar_ventas)
     cant = int(cant)
     imp = float(imp)

@@ -14,7 +14,7 @@ Tambien como alternativa valida, se utiliza with open para la apertura.'''
 
 
 def listar_archivo():
-    with open('C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\ventas.csv', 'r') as arVentas:
+    with open('C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\archivos (csv, txt, bin)\\ventas.csv', 'r') as arVentas:
         cant_total_gral = imp_total_gral = 0
         for linea in arVentas:
             cod_suc, cod_art, cant, imp = linea.rstrip("\n").split(",")

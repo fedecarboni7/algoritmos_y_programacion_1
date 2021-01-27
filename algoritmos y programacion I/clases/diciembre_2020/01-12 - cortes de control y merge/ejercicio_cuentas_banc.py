@@ -6,10 +6,11 @@ def leer_info(movs):
         registro = ["999999","0"]
     return registro
 
+ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\archivos (csv, txt, bin)\\ejercicio_cuentas_banc\\"
 
-movsbane= open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\moviBANE.txt", 'rt') 
-movshb = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\moviHB.txt", 'rt') 
-movssuc = open("C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\moviSUC.txt", 'rt') 
+movsbane= open(f"{ruta}moviBANE.txt", 'rt')
+movshb = open(f"{ruta}moviHB.txt", 'rt')
+movssuc = open(f"{ruta}moviSUC.txt", 'rt')
 max = '999999'
 bane_cta, bane_importe = leer_info(movsbane)
 hb_cta, hb_importe = leer_info(movshb)

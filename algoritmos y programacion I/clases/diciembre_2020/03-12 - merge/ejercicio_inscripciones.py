@@ -10,11 +10,12 @@ def leer_registro(fh):
     return registro
 
 def merge_inscripciones():
-    
-    inscr_web_fh     = open('C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\inscripciones_web.csv','r')
-    inscr_tel_fh     = open('C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\inscripciones_tel.csv','r')
-    inscr_pre_fh     = open('C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\inscripciones_pre.csv','r')
-    inscripciones_fh = open('C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\inscripciones.csv','w')
+    ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\archivos (csv, txt, bin)\\ejercicio_inscripciones\\"
+
+    inscr_web_fh     = open(f'{ruta}inscripciones_web.csv','r')
+    inscr_tel_fh     = open(f'{ruta}inscripciones_tel.csv','r')
+    inscr_pre_fh     = open(f'{ruta}inscripciones_pre.csv','r')
+    inscripciones_fh = open(f'{ruta}inscripciones.csv','w')
     
     padron_web,materia_web,fecha_web,curso_web = leer_registro(inscr_web_fh)
     padron_tel,materia_tel,fecha_tel,curso_tel = leer_registro(inscr_tel_fh)

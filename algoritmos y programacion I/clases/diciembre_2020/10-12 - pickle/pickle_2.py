@@ -8,7 +8,7 @@ def generar_diccionario():
     return empleados
 
 def cargar_archivo(empleados):
-    a_escritura = open('C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\prueba.dat','wb')
+    a_escritura = open('C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\archivos (csv, txt, bin)\\prueba.dat','wb')
     for legajo in empleados:
         pickle.dump(legajo, a_escritura)
         pickle.dump(empleados[legajo], a_escritura)
@@ -16,7 +16,7 @@ def cargar_archivo(empleados):
     a_escritura.close()
 
 def leer_archivo():
-    a_lectura = open('C:\\Users\\feden\\Documents\\Archivos\\UBA\\FIUBA\\Algoritmos y programacion I\\ejercicios\\prueba.dat','rb')
+    a_lectura = open('C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\archivos (csv, txt, bin)\\prueba.dat','rb')
     legajo = pickle.load(a_lectura)
     while (legajo != 0):
         print(legajo)
