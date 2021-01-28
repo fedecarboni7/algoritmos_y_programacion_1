@@ -34,19 +34,22 @@ def leer_info(usuario):
 
 def usuarios():
 
-    ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\tp netflip\\archivos\\"
-
+    ruta = "C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\tp netflip\\archivos\\"
+    
     try:
+        ordenar("usuarios_1.csv")
         usuarios_1 = open(f'{ruta}usuarios_1.csv','r')
-    except FileNotFoundError:
+    except UnsupportedOperation:
         usuarios_1 = open(f'{ruta}usuarios_1.csv','w')
     try:
+        ordenar("usuarios_2.csv")
         usuarios_2 = open(f'{ruta}usuarios_2.csv','r')
-    except FileNotFoundError:
+    except UnsupportedOperation:
         usuarios_2 = open(f'{ruta}usuarios_2.csv','w')
     try:
+        ordenar("usuarios_3.csv")
         usuarios_3 = open(f'{ruta}usuarios_3.csv','r')
-    except FileNotFoundError:
+    except UnsupportedOperation:
         usuarios_3 = open(f'{ruta}usuarios_3.csv','w')
     
     usuarios_merge = open(f'{ruta}usuarios_merge.csv','w')
@@ -54,26 +57,26 @@ def usuarios():
     csv_error = open(f'{ruta}log.csv','w')
 
     id_usuario_1, nombre_apellido_1, año_de_nacimiento_1, lista_peliculas_1 = leer_info(usuarios_1)
-    clave_usuario_1 = id_usuario_1, nombre_apellido_1, año_de_nacimiento_1, lista_peliculas_1
+    clave_usuario_1 =[id_usuario_1, nombre_apellido_1, año_de_nacimiento_1, lista_peliculas_1]
     
     id_usuario_2, nombre_apellido_2, año_de_nacimiento_2, lista_peliculas_2 = leer_info(usuarios_2)
-    clave_usuario_2 = id_usuario_2, nombre_apellido_2, año_de_nacimiento_2, lista_peliculas_2
+    clave_usuario_2 = [id_usuario_2, nombre_apellido_2, año_de_nacimiento_2, lista_peliculas_2]
 
     id_usuario_3, nombre_apellido_3, año_de_nacimiento_3, lista_peliculas_3 = leer_info(usuarios_3)
-    clave_usuario_3 = id_usuario_3, nombre_apellido_3, año_de_nacimiento_3, lista_peliculas_3
+    clave_usuario_3 = [id_usuario_3, nombre_apellido_3, año_de_nacimiento_3, lista_peliculas_3]
 
     max = "999999"
     clave_anterior = [" "," "," "," "]
 
     while id_usuario_1 != max or id_usuario_2 != max or id_usuario_3 != max:
-        
+
         men = min(clave_usuario_1, clave_usuario_2, clave_usuario_3)
         
         while men[0] == clave_anterior[0]:
             if men[1] != clave_anterior[1] or men[2] != clave_anterior[2]:
-                csv_error.write(f"Las claves {men} y {clave_anterior} no coinciden\n") ##en caso de tirar error, hacer primero el formato en una variable, y despues pasarla al write
+                csv_error.write(f"Las claves {men} y {clave_anterior} no coinciden\n")
             else:
-                usuarios_merge.write("{},{},{},{}:{}\n".format(clave_anterior[0],clave_anterior[1],clave_anterior[2],clave_anterior[3],men[3]))
+                usuarios_merge.write(":{}".format(men[3]))
 
             clave_anterior = men
 
@@ -86,9 +89,12 @@ def usuarios():
 
             men = min(clave_usuario_1, clave_usuario_2, clave_usuario_3)
         
+        if usuarios_merge.tell() != 0:
+            usuarios_merge.write("\n")
+
         clave_anterior = men
                 
-        usuarios_merge.write("{},{},{},{}\n".format(clave_anterior[0],clave_anterior[1],clave_anterior[2],clave_anterior[3]))
+        usuarios_merge.write("{},{},{},{}".format(clave_anterior[0],clave_anterior[1],clave_anterior[2],clave_anterior[3]))
         
         if men == clave_usuario_1:
             clave_usuario_1 = id_usuario_1, nombre_apellido_1, año_de_nacimiento_1, lista_peliculas_1 = leer_info(usuarios_1)
@@ -102,6 +108,33 @@ def usuarios():
     usuarios_3.close()
     usuarios_merge.close()
     csv_error.close()
+
+    return
+
+def ordenar(archivo):
+
+    ruta = "C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\tp netflip\\archivos\\"
+
+    usuarios_ordenado = open(f'{ruta}{archivo}','r+')
+    
+    max = "999999"
+    lista = []
+
+    id_usuario, nombre_apellido, año_de_nacimiento, lista_peliculas = leer_info(usuarios_ordenado)
+    clave_usuario = [id_usuario, nombre_apellido, año_de_nacimiento, lista_peliculas]
+    
+    while id_usuario != max:
+        lista += [clave_usuario]
+        id_usuario, nombre_apellido, año_de_nacimiento, lista_peliculas = leer_info(usuarios_ordenado)
+        clave_usuario = [id_usuario, nombre_apellido, año_de_nacimiento, lista_peliculas]
+
+    lista.sort(key=lambda i: i[0])
+    usuarios_ordenado.seek(0)
+    
+    for i in range(len(lista)):
+        usuarios_ordenado.write(f"{lista[i][0]},{lista[i][1]},{lista[i][2]},{lista[i][3]}\n")
+
+    usuarios_ordenado.close()
 
     return
 
