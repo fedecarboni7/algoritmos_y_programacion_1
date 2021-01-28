@@ -29,7 +29,7 @@ def leer_info(usuario):
     if linea:
         registro = linea.rstrip('\n').split(',')
     else:
-        registro = ['999999'] # Condición de salida del while
+        registro = ['999999','','',''] # Condición de salida del while
     return registro
 
 def usuarios():
@@ -73,7 +73,7 @@ def usuarios():
             if men[1] != clave_anterior[1] or men[2] != clave_anterior[2]:
                 csv_error.write(f"Las claves {men} y {clave_anterior} no coinciden\n") ##en caso de tirar error, hacer primero el formato en una variable, y despues pasarla al write
             else:
-                usuarios_merge.write(clave_anterior[0], clave_anterior[1], clave_anterior[2], clave_anterior[3] + men[3])
+                usuarios_merge.write("{},{},{},{}:{}\n".format(clave_anterior[0],clave_anterior[1],clave_anterior[2],clave_anterior[3],men[3]))
 
             clave_anterior = men
 
@@ -84,6 +84,25 @@ def usuarios():
             elif men == clave_usuario_3:
                 clave_usuario_3 = id_usuario_3, nombre_apellido_3, año_de_nacimiento_3, lista_peliculas_3 = leer_info(usuarios_3)
 
+            men = min(clave_usuario_1, clave_usuario_2, clave_usuario_3)
+        
+        clave_anterior = men
+                
+        usuarios_merge.write("{},{},{},{}\n".format(clave_anterior[0],clave_anterior[1],clave_anterior[2],clave_anterior[3]))
+        
+        if men == clave_usuario_1:
+            clave_usuario_1 = id_usuario_1, nombre_apellido_1, año_de_nacimiento_1, lista_peliculas_1 = leer_info(usuarios_1)
+        elif men == clave_usuario_2:
+            clave_usuario_2 = id_usuario_2, nombre_apellido_2, año_de_nacimiento_2, lista_peliculas_2 = leer_info(usuarios_2)
+        elif men == clave_usuario_3:
+            clave_usuario_3 = id_usuario_3, nombre_apellido_3, año_de_nacimiento_3, lista_peliculas_3 = leer_info(usuarios_3)
+
+    usuarios_1.close()
+    usuarios_2.close()
+    usuarios_3.close()
+    usuarios_merge.close()
+    csv_error.close()
+    
     return
 
 def peliculas():
