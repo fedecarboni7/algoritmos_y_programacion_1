@@ -37,19 +37,19 @@ def usuarios():
     ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\tp netflip\\archivos\\"
 
     try:
-        usuarios_1 = open(f'{ruta}usuarios_netflip_1.csv','r')
+        usuarios_1 = open(f'{ruta}usuarios_1.csv','r')
     except FileNotFoundError:
-        usuarios_1 = open(f'{ruta}usuarios_netflip_1.csv','w')
+        usuarios_1 = open(f'{ruta}usuarios_1.csv','w')
     try:
-        usuarios_2 = open(f'{ruta}usuarios_netflip_2.csv','r')
+        usuarios_2 = open(f'{ruta}usuarios_2.csv','r')
     except FileNotFoundError:
-        usuarios_2 = open(f'{ruta}usuarios_netflip_2.csv','w')
+        usuarios_2 = open(f'{ruta}usuarios_2.csv','w')
     try:
-        usuarios_3 = open(f'{ruta}usuarios_netflip_3.csv','r')
+        usuarios_3 = open(f'{ruta}usuarios_3.csv','r')
     except FileNotFoundError:
-        usuarios_3 = open(f'{ruta}usuarios_netflip_3.csv','w')
+        usuarios_3 = open(f'{ruta}usuarios_3.csv','w')
     
-    usuarios_merge = open(f'{ruta}usuarios_netflip_merge.csv','w')
+    usuarios_merge = open(f'{ruta}usuarios_merge.csv','w')
 
     csv_error = open(f'{ruta}log.csv','w')
 
@@ -102,7 +102,7 @@ def usuarios():
     usuarios_3.close()
     usuarios_merge.close()
     csv_error.close()
-    
+
     return
 
 def peliculas():
