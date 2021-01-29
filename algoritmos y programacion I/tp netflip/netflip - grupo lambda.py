@@ -33,23 +33,23 @@ def leer_info(usuario):
     return registro
 
 def usuarios():
-
-    ruta = "C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\tp netflip\\archivos\\"
+    ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\tp netflip\\archivos\\"
+    #ruta = "C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\tp netflip\\archivos\\"
     
     try:
         ordenar("usuarios_1.csv")
         usuarios_1 = open(f'{ruta}usuarios_1.csv','r')
-    except UnsupportedOperation:
-        usuarios_1 = open(f'{ruta}usuarios_1.csv','w')
+    except FileNotFoundError:
+        usuarios_1 = open(f'{ruta}usuarios_1.csv','w') #esto no funca, ya que despues en la linea 59 cuando trata de leer info no puede ya que está en "w" solucion: despues de abrirlo hacer la alta de usuarios?
     try:
         ordenar("usuarios_2.csv")
         usuarios_2 = open(f'{ruta}usuarios_2.csv','r')
-    except UnsupportedOperation:
+    except FileNotFoundError:
         usuarios_2 = open(f'{ruta}usuarios_2.csv','w')
     try:
         ordenar("usuarios_3.csv")
         usuarios_3 = open(f'{ruta}usuarios_3.csv','r')
-    except UnsupportedOperation:
+    except FileNotFoundError:
         usuarios_3 = open(f'{ruta}usuarios_3.csv','w')
     
     usuarios_merge = open(f'{ruta}usuarios_merge.csv','w')
@@ -74,7 +74,7 @@ def usuarios():
         
         while men[0] == clave_anterior[0]:
             if men[1] != clave_anterior[1] or men[2] != clave_anterior[2]:
-                csv_error.write(f"Las claves {men} y {clave_anterior} no coinciden\n")
+                csv_error.write(f"Los datos personales en {men[0:3]} y {clave_anterior} no coinciden\n")
             else:
                 usuarios_merge.write(":{}".format(men[3]))
 
@@ -113,7 +113,8 @@ def usuarios():
 
 def ordenar(archivo):
 
-    ruta = "C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\tp netflip\\archivos\\"
+    ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\tp netflip\\archivos\\"
+    #ruta = "C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\tp netflip\\archivos\\"
 
     usuarios_ordenado = open(f'{ruta}{archivo}','r+')
     
