@@ -1,4 +1,5 @@
 import pickle
+import math
 
 def mostrar_menu():
     print(f"\nMenú Principal\n")
@@ -11,7 +12,7 @@ def mostrar_menu():
 
 def menu(opcion):
     if(opcion == 1):
-        usuarios()
+        merge_usuarios() #cambiar por usuarios() y crear otro submenú con las 4 opciones (merge, alta, baja, lista ordenada)
         menu(mostrar_menu())
     elif(opcion == 2):
         peliculas()
@@ -29,30 +30,42 @@ def leer_info(usuario):
     if linea:
         registro = linea.rstrip('\n').split(',')
     else:
-        registro = ['999999','','',''] # Condición de salida del while
+        registro = ['zzzz9999','','',''] # Condición de salida del while
     return registro
 
-def usuarios():
-    ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\tp netflip\\archivos\\"
-    #ruta = "C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\tp netflip\\archivos\\"
+def merge_usuarios():
+    #ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\tp netflip\\archivos\\"
+    ruta = "C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\tp netflip\\archivos\\"
     
+    hay_usuarios = False
+
     try:
         ordenar("usuarios_1.csv")
         usuarios_1 = open(f'{ruta}usuarios_1.csv','r')
+        hay_usuarios = True
     except FileNotFoundError:
-        usuarios_1 = open(f'{ruta}usuarios_1.csv','w') #esto no funca, ya que despues en la linea 59 cuando trata de leer info no puede ya que está en "w" solucion: despues de abrirlo hacer la alta de usuarios?
+        usuarios_1 = open(f'{ruta}usuarios_1.csv','w+') #esto no funca, ya que despues en la linea 59 cuando trata de leer info no puede ya que está en "w" solucion: despues de abrirlo hacer la alta de usuarios?
     try:
         ordenar("usuarios_2.csv")
         usuarios_2 = open(f'{ruta}usuarios_2.csv','r')
+        hay_usuarios = True
     except FileNotFoundError:
-        usuarios_2 = open(f'{ruta}usuarios_2.csv','w')
+        usuarios_2 = open(f'{ruta}usuarios_2.csv','w+')
     try:
         ordenar("usuarios_3.csv")
         usuarios_3 = open(f'{ruta}usuarios_3.csv','r')
+        hay_usuarios = True
     except FileNotFoundError:
-        usuarios_3 = open(f'{ruta}usuarios_3.csv','w')
+        usuarios_3 = open(f'{ruta}usuarios_3.csv','w+')
     
     usuarios_merge = open(f'{ruta}usuarios_merge.csv','w')
+
+    if not hay_usuarios:
+        print("No se encuentran usuarios creados, por favor cree uno")
+        alta_de_usuario(usuarios_1)
+        ordenar("usuarios_1.csv")
+        usuarios_1 = open(f'{ruta}usuarios_1.csv','r')
+
 
     csv_error = open(f'{ruta}log.csv','w')
 
@@ -65,16 +78,16 @@ def usuarios():
     id_usuario_3, nombre_apellido_3, año_de_nacimiento_3, lista_peliculas_3 = leer_info(usuarios_3)
     clave_usuario_3 = [id_usuario_3, nombre_apellido_3, año_de_nacimiento_3, lista_peliculas_3]
 
-    max = "999999"
+    max = "zzzz9999"
     clave_anterior = [" "," "," "," "]
 
-    while id_usuario_1 != max or id_usuario_2 != max or id_usuario_3 != max:
+    while id_usuario_1 != max or id_usuario_2 != max or id_usuario_3 != max :
 
         men = min(clave_usuario_1, clave_usuario_2, clave_usuario_3)
         
         while men[0] == clave_anterior[0]:
             if men[1] != clave_anterior[1] or men[2] != clave_anterior[2]:
-                csv_error.write(f"Los datos personales en {men[0:3]} y {clave_anterior} no coinciden\n")
+                csv_error.write(f"Los datos personales en {men[0:3]} y {clave_anterior[0:3]} no coinciden\n")
             else:
                 usuarios_merge.write(":{}".format(men[3]))
 
@@ -111,14 +124,40 @@ def usuarios():
 
     return
 
+def alta_de_usuario(usuarios_1):
+
+    #ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\tp netflip\\archivos\\"
+    ruta = "C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\tp netflip\\archivos\\"
+
+    with open(f'{ruta}usuarios_1.csv','a') as usuarios_1:
+        seguir = "s"
+        while seguir == "s":
+            print("\nCreación de usuario")
+            nombre = input(f"\nIngrese nombre: ")
+            apellido = input(f"\nIngrese apellido: ")
+            año_de_nacimiento = input(f"\nIngrese año de nacimiento: ")
+            if len(apellido) < 3:
+                id_usuario = nombre[0] + apellido + año_de_nacimiento
+            else:
+                id_usuario = nombre[0] + apellido[0:3] + año_de_nacimiento
+            
+            usuarios_1.write(f"{id_usuario}, {nombre} {apellido}, {año_de_nacimiento},\n")
+
+            seguir = input(f"\n¿Querés seguir creando usuarios? (s/n): ")
+
+    return
+
+def baja_de_usuarios():
+    return None
+
 def ordenar(archivo):
 
-    ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\tp netflip\\archivos\\"
-    #ruta = "C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\tp netflip\\archivos\\"
+    #ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\tp netflip\\archivos\\"
+    ruta = "C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\tp netflip\\archivos\\"
 
     usuarios_ordenado = open(f'{ruta}{archivo}','r+')
     
-    max = "999999"
+    max = "zzzz9999"
     lista = []
 
     id_usuario, nombre_apellido, año_de_nacimiento, lista_peliculas = leer_info(usuarios_ordenado)
