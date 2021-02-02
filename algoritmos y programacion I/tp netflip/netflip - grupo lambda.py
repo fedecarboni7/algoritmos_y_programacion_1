@@ -44,7 +44,7 @@ def merge_usuarios():
         usuarios_1 = open(f'{ruta}usuarios_1.csv','r')
         hay_usuarios = True
     except FileNotFoundError:
-        usuarios_1 = open(f'{ruta}usuarios_1.csv','w+') #esto no funca, ya que despues en la linea 59 cuando trata de leer info no puede ya que está en "w" solucion: despues de abrirlo hacer la alta de usuarios?
+        usuarios_1 = open(f'{ruta}usuarios_1.csv','w+')
     try:
         ordenar("usuarios_2.csv")
         usuarios_2 = open(f'{ruta}usuarios_2.csv','r')
