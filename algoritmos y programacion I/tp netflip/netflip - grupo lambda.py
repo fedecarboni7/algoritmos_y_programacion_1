@@ -2,7 +2,7 @@ import pickle
 import math
 
 def mostrar_menu():
-    print(f"\nMenú Principal\n")
+    print(f"\n--- Menú Principal ---\n")
     print("1. Usuarios")
     print("2. Películas")
     print("3. Recomendaciones")
@@ -61,7 +61,7 @@ def merge_usuarios():
     usuarios_merge = open(f'{ruta}usuarios_merge.csv','w')
 
     if not hay_usuarios:
-        print("No se encuentran usuarios creados, por favor cree uno")
+        print("\nNo se encuentran usuarios creados, por favor cree uno")
         alta_de_usuario(usuarios_1)
         ordenar("usuarios_1.csv")
         usuarios_1 = open(f'{ruta}usuarios_1.csv','r')
@@ -132,10 +132,10 @@ def alta_de_usuario(usuarios_1):
     with open(f'{ruta}usuarios_1.csv','a') as usuarios_1:
         seguir = "s"
         while seguir == "s":
-            print("\nCreación de usuario")
-            nombre = input(f"\nIngrese nombre: ")
-            apellido = input(f"\nIngrese apellido: ")
-            año_de_nacimiento = input(f"\nIngrese año de nacimiento: ")
+            print("\n--- Creación de usuario ---")
+            nombre = input(f"Ingrese nombre: ")
+            apellido = input(f"Ingrese apellido: ")
+            año_de_nacimiento = input(f"Ingrese año de nacimiento: ")
             if len(apellido) < 3:
                 id_usuario = nombre[0] + apellido + año_de_nacimiento
             else:
