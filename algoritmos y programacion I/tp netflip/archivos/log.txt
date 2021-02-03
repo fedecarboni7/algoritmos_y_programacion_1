@@ -1,1 +1,0 @@
-Los datos personales en ['RCar1964', ' Ruben Caroni', ' 1964'] y ['RCar1964', ' Ruben Carboni', ' 1964'] no coinciden
