@@ -1,7 +1,8 @@
 import pickle
 
-ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\tp netflip\\archivos\\"
+#ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\tp netflip\\archivos\\"
 #ruta = "C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\tp netflip\\archivos\\"
+ruta = "C:\\Users\\Ruben\\Desktop\\FIUBA\\algoritmos y programacion I\\tp netflip\\archivos\\"
 
 def leer_info(archivo):
     linea = archivo.readline()
@@ -98,7 +99,7 @@ def merge_usuarios(ruta):
     max = "zzzz9999"
     clave_anterior = [" "," "," "," "]
 
-    while id_usuario_1 != max or id_usuario_2 != max or id_usuario_3 != max :
+    while id_usuario_1 != max or id_usuario_2 != max or id_usuario_3 != max:
 
         men = min(clave_usuario_1, clave_usuario_2, clave_usuario_3)
         
@@ -168,7 +169,6 @@ def alta_de_usuario(ruta):
             usuarios_1.write(f"{id_usuario}, {nombre} {apellido}, {año_de_nacimiento},\n")
 
             seguir = input(f"\n¿Querés seguir creando usuarios? (s/n): ")
-
     return
 
 def baja_de_usuario():
@@ -186,9 +186,9 @@ def ordenar(ruta, archivo):
             lista_id_ordenados += [clave_usuario]
             id_usuario, nombre_apellido, año_de_nacimiento, lista_peliculas = leer_info(usuarios_ordenado)
             clave_usuario = [id_usuario, nombre_apellido, año_de_nacimiento, lista_peliculas]
-    
-    lista_id_ordenados.sort(key=lambda i: i[0])
 
+    lista_id_ordenados.sort(key=lambda i: i[0])
+    
     return lista_id_ordenados
 
 def lista_a_archivo(ruta, archivo, lista_id_ordenados):
@@ -196,7 +196,6 @@ def lista_a_archivo(ruta, archivo, lista_id_ordenados):
         
         for i in range(len(lista_id_ordenados)):
             usuarios_ordenado.write(f"{lista_id_ordenados[i][0]},{lista_id_ordenados[i][1]},{lista_id_ordenados[i][2]},{lista_id_ordenados[i][3]}\n")
-
     return
 
 def listar_por_id(lista_id_ordenados):
