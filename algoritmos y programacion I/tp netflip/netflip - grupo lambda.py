@@ -1,8 +1,9 @@
 import pickle
+import os
 
-#ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\tp netflip\\archivos\\"
+ruta = "C:\\Users\\federico.carboni\\Desktop\\FIUBA Repo\\algoritmos y programacion I\\tp netflip\\archivos\\"
 #ruta = "C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\tp netflip\\archivos\\"
-ruta = "C:\\Users\\Ruben\\Desktop\\FIUBA\\algoritmos y programacion I\\tp netflip\\archivos\\"
+#ruta = "C:\\Users\\Ruben\\Desktop\\FIUBA\\algoritmos y programacion I\\tp netflip\\archivos\\"
 
 def leer_info(usuario):
     linea = usuario.readline()
@@ -57,8 +58,7 @@ def usuarios(opcion, ruta):
         baja_de_usuario()
         usuarios(mostrar_submenu_usuarios(), ruta)
     elif(opcion == 4):
-        merge_usuarios(ruta)
-        listar_por_id(ordenar(ruta, "usuarios_merge.csv"))
+        listar_por_id(ruta)
         usuarios(mostrar_submenu_usuarios(), ruta)
     elif(opcion != 5):
         print(f"\nIngrese una opción del 1 al 5")
@@ -69,23 +69,14 @@ def merge_usuarios(ruta):
     try:
         lista_a_archivo(ruta, "usuarios_1.csv", ordenar(ruta, "usuarios_1.csv"))
         usuarios_1 = open(f'{ruta}usuarios_1.csv','r')
-    except FileNotFoundError:
-        usuarios_1 = open(f'{ruta}usuarios_1.csv','w+')
-    try:
         lista_a_archivo(ruta, "usuarios_2.csv", ordenar(ruta, "usuarios_2.csv"))
         usuarios_2 = open(f'{ruta}usuarios_2.csv','r')
-    except FileNotFoundError:
-        usuarios_2 = open(f'{ruta}usuarios_2.csv','w+')
-    try:
-        lista_a_archivo(ruta, "usuarios_2.csv", ordenar(ruta, "usuarios_2.csv"))
+        lista_a_archivo(ruta, "usuarios_3.csv", ordenar(ruta, "usuarios_3.csv"))
         usuarios_3 = open(f'{ruta}usuarios_3.csv','r')
     except FileNotFoundError:
-        usuarios_3 = open(f'{ruta}usuarios_3.csv','w+')
+        return print("\nNo hay archivos de usuarios suficientes para generar un merge.\nPor favor elija otra opción.")
     
     usuarios_merge = open(f'{ruta}usuarios_merge.csv','w')
-    
-    if not hay_usuarios(usuarios_1) and not hay_usuarios(usuarios_2) and not hay_usuarios(usuarios_3):
-        return print("\nNo se encuentran usuarios creados, por favor cree uno")
 
     id_usuario_1, nombre_apellido_1, año_de_nacimiento_1, lista_peliculas_1 = leer_info(usuarios_1)
     clave_usuario_1 =[id_usuario_1, nombre_apellido_1, año_de_nacimiento_1, lista_peliculas_1]
@@ -142,18 +133,27 @@ def merge_usuarios(ruta):
     usuarios_1.close()
     usuarios_2.close()
     usuarios_3.close()
+
+    os.remove(f"{ruta}usuarios_1.csv")
+    os.remove(f"{ruta}usuarios_2.csv")
+    os.remove(f"{ruta}usuarios_3.csv")
+    
     usuarios_merge.close()
+    print("\nArchivos de usuarios mergeados con éxito.")
 
     return
 
-def hay_usuarios(archivo_usuarios):
-    leer_info(archivo_usuarios)
-    hay_usuarios = 0 != archivo_usuarios.tell()
-    archivo_usuarios.seek(0)
-    return hay_usuarios
-
 def alta_de_usuario(ruta):
-    with open(f'{ruta}usuarios_1.csv','a') as usuarios_1:
+    if os.path.exists(f"{ruta}usuarios_merge.csv"):
+        archivo = "usuarios_merge.csv"
+    elif os.path.exists(f"{ruta}usuarios_1.csv"):
+        archivo = "usuarios_1.csv"
+    elif os.path.exists(f"{ruta}usuarios_extra.csv"):
+        archivo = "usuarios_extra.csv"
+    else:
+        archivo = "usuarios_nuevo.csv"
+        
+    with open(f'{ruta}{archivo}','a') as creacion_usuario:
         seguir = "s"
         while seguir == "s":
             print("\n--- Creación de usuario ---")
@@ -166,7 +166,7 @@ def alta_de_usuario(ruta):
                 id_usuario = nombre[0] + apellido + año_de_nacimiento
             print(f"\nUsuario creado con éxito. Tu ID es: {id_usuario}")
             
-            usuarios_1.write(f"{id_usuario}, {nombre} {apellido}, {año_de_nacimiento},\n")
+            creacion_usuario.write(f"{id_usuario}, {nombre} {apellido}, {año_de_nacimiento},\n")
 
             seguir = input(f"\n¿Querés seguir creando usuarios? (s/n): ")
     return
@@ -193,16 +193,36 @@ def ordenar(ruta, archivo):
 
 def lista_a_archivo(ruta, archivo, lista_id_ordenados):
     with open(f'{ruta}{archivo}','w') as usuarios_ordenado:
-        
         for i in range(len(lista_id_ordenados)):
             usuarios_ordenado.write(f"{lista_id_ordenados[i][0]},{lista_id_ordenados[i][1]},{lista_id_ordenados[i][2]},{lista_id_ordenados[i][3]}\n")
     return
 
-def listar_por_id(lista_id_ordenados):
-    for usuario in lista_id_ordenados:
-        print(usuario)
+def listar_por_id(ruta):
+    if os.path.exists(f"{ruta}usuarios_nuevo.csv"):
+        archivo = "usuarios_nuevo.csv"
+    elif os.path.exists(f"{ruta}usuarios_extra.csv"):
+        archivo = "usuarios_extra.csv"
+    elif os.path.exists(f"{ruta}usuarios_merge.csv"):
+        archivo = "usuarios_merge.csv"
+    else:
+        merge_usuarios(ruta)
+        archivo = "usuarios_merge.csv"
+
+    lista_id_ordenados = ordenar(ruta, archivo)
+
+    if hay_usuarios(ruta, archivo):
+        for usuario in lista_id_ordenados:
+            print(usuario)
+    else:
+        print("No se encuentran usuarios para listar")
     return
 
+def hay_usuarios(ruta, archivo):
+    with open(f"{ruta}{archivo}","r") as archivo_usuarios:
+        leer_info(archivo_usuarios)
+        bool_hay_usuarios = 0 != archivo_usuarios.tell()
+    return bool_hay_usuarios
+    
 def peliculas():
     return None
 
@@ -210,4 +230,7 @@ def recomendaciones():
     return None
 
 #------- Bloque de inicio -------#
+if not os.path.exists(f"{ruta}usuarios_1.csv") and not os.path.exists(f"{ruta}usuarios_extra.csv"):
+    usuarios_nuevo = open(f"{ruta}usuarios_nuevo.csv", "w")
+    usuarios_nuevo.close()
 menu(mostrar_menu(), ruta)
