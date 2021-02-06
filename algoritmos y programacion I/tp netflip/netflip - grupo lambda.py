@@ -214,12 +214,15 @@ def ordenar(ruta, archivo):
     return lista_id_ordenados
 
 def listar_por_id(lista_id_ordenados):
-    nombre_mas_largo = max(lista_id_ordenados, key=lambda i: len(i[1]))[1] # Devuelve el nombre más largo de la lista
-    print(' Lista de usuarios '.center(31 + max(len(nombre_mas_largo) + 2, 22), '-'))
-    print('ID Usuario'.ljust(14) + 'Nombre y Apellido'.ljust(max(len(nombre_mas_largo) + 2, 22)) + 'Año de Nacimiento\n')
-    for usuario in lista_id_ordenados:
-        id_usuario, nombre, año_de_nacimiento = usuario[0:3]
-        print(id_usuario.ljust(14) + nombre.ljust(max(len(nombre_mas_largo) + 2, 22)) + año_de_nacimiento)
+    if hay_usuarios(ruta,"usuarios_merge.csv"):
+        nombre_mas_largo = max(lista_id_ordenados, key=lambda i: len(i[1]))[1] # Devuelve el nombre más largo de la lista
+        print(' Lista de usuarios '.center(31 + max(len(nombre_mas_largo) + 2, 22), '-'))
+        print('ID Usuario'.ljust(14) + 'Nombre y Apellido'.ljust(max(len(nombre_mas_largo) + 2, 22)) + 'Año de Nacimiento\n')
+        for usuario in lista_id_ordenados:
+            id_usuario, nombre, año_de_nacimiento = usuario[0:3]
+            print(id_usuario.ljust(14) + nombre.ljust(max(len(nombre_mas_largo) + 2, 22)) + año_de_nacimiento)
+    else:
+        print("No se encuentran usuarios para listar.")
     return
 
 def lista_a_archivo(ruta, archivo, lista_id_ordenados):
@@ -229,11 +232,11 @@ def lista_a_archivo(ruta, archivo, lista_id_ordenados):
             usuarios_ordenado.write(f"{lista_id_ordenados[i][0]},{lista_id_ordenados[i][1]},{lista_id_ordenados[i][2]},{lista_id_ordenados[i][3]}\n")
     return
 
-def hay_usuarios(archivo_usuarios):
-    leer_info(archivo_usuarios)
-    hay_usuarios = 0 != archivo_usuarios.tell()
-    archivo_usuarios.seek(0)
-    return hay_usuarios
+def hay_usuarios(ruta, archivo):
+    with open(f"{ruta}{archivo}","r") as archivo_usuarios:
+        leer_info(archivo_usuarios)
+        bool_hay_usuarios = 0 != archivo_usuarios.tell()
+    return bool_hay_usuarios
     
 def peliculas():
     return None
