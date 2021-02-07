@@ -12,6 +12,14 @@ def leer_info(usuario):
         registro = ['999zz99','','',''] # Condición de salida del while
     return registro
 
+def leer_info_bin(peliculas):
+    try:
+        linea = pickle.load(peliculas)
+        registro = linea
+    except EOFError:
+        registro = [" "," "," "," "," "] # Condición de salida del while
+    return registro
+
 def mostrar_menu():
     print(f"\n--- Menú Principal ---\n")
     print("1. Usuarios")
@@ -26,7 +34,7 @@ def menu(opcion, ruta):
         usuarios(submenu_usuarios(), ruta)
         menu(mostrar_menu(), ruta)
     elif(opcion == 2):
-        peliculas()
+        peliculas(submenu_peliculas(), ruta)
         menu(mostrar_menu(), ruta)
     elif(opcion == 3):
         recomendaciones()
@@ -52,14 +60,14 @@ def usuarios(opcion, ruta):
         usuarios(submenu_usuarios(), ruta)
     elif(opcion == 2):
         alta_de_usuario(ruta)
-        lista_a_archivo(ruta, "usuarios_merge.csv", ordenar(ruta, "usuarios_merge.csv"))
+        lista_a_archivo(ruta, "usuarios.csv", ordenar(ruta, "usuarios.csv"))
         usuarios(submenu_usuarios(), ruta)
     elif(opcion == 3):
         baja_de_usuario()
         usuarios(submenu_usuarios(), ruta)
     elif(opcion == 4):
         print('\nGenerando lista...\n')
-        listar_por_id(ordenar(ruta, "usuarios_merge.csv"))
+        listar_por_id(ordenar(ruta, "usuarios.csv"))
         usuarios(submenu_usuarios(), ruta)
     elif(opcion != 5):
         print(f"\nIngrese una opción del 1 al 5")
@@ -78,7 +86,7 @@ def merge_usuarios(ruta):
     except FileNotFoundError:
         return print("\nNo hay archivos de usuarios suficientes para generar un merge.\nPor favor elija otra opción.")
     
-    usuarios_merge = open(f'{ruta}usuarios_merge.csv','a')
+    usuarios = open(f'{ruta}usuarios.csv','a')
     
     id_usuario_1, nombre_apellido_1, año_de_nacimiento_1, lista_peliculas_1 = leer_info(usuarios_1)
     clave_usuario_1 =[id_usuario_1, nombre_apellido_1, año_de_nacimiento_1, lista_peliculas_1]
@@ -107,7 +115,7 @@ def merge_usuarios(ruta):
                 log_error.write(f'{id_usuario_error},{nombre_error},{año_nacimiento_error},{peliculas_error}\n')
                 log_error.close()
             else:
-                usuarios_merge.write(":{}".format(men[3]))
+                usuarios.write(":{}".format(men[3]))
 
             clave_anterior = men
 
@@ -120,12 +128,12 @@ def merge_usuarios(ruta):
 
             men = min(clave_usuario_1, clave_usuario_2, clave_usuario_3)
         
-        if usuarios_merge.tell() != 0:
-            usuarios_merge.write("\n")
+        if usuarios.tell() != 0:
+            usuarios.write("\n")
 
         clave_anterior = men
 
-        usuarios_merge.write("{},{},{},{}".format(clave_anterior[0],clave_anterior[1],clave_anterior[2],clave_anterior[3]))
+        usuarios.write("{},{},{},{}".format(clave_anterior[0],clave_anterior[1],clave_anterior[2],clave_anterior[3]))
         
         if men == clave_usuario_1:
             clave_usuario_1 = id_usuario_1, nombre_apellido_1, año_de_nacimiento_1, lista_peliculas_1 = leer_info(usuarios_1)
@@ -134,12 +142,12 @@ def merge_usuarios(ruta):
         elif men == clave_usuario_3:
             clave_usuario_3 = id_usuario_3, nombre_apellido_3, año_de_nacimiento_3, lista_peliculas_3 = leer_info(usuarios_3)
 
-    usuarios_merge.write('\n')
+    usuarios.write('\n')
     
     usuarios_1.close()
     usuarios_2.close()
     usuarios_3.close()
-    usuarios_merge.close()
+    usuarios.close()
 
     os.remove(f"{ruta}usuarios_1.csv")
     os.remove(f"{ruta}usuarios_2.csv")
@@ -152,10 +160,10 @@ def merge_usuarios(ruta):
     return
 
 def alta_de_usuario(ruta):
-    if not os.path.exists(f"{ruta}usuarios_merge.csv"):
+    if not os.path.exists(f"{ruta}usuarios.csv"):
         merge_usuarios(ruta)
 
-    with open(f'{ruta}usuarios_merge.csv','a') as usuarios_merge:
+    with open(f'{ruta}usuarios.csv','a') as usuarios:
         seguir = "s"
         while seguir == "s":
             print("\n--- Creación de usuario ---")
@@ -171,29 +179,26 @@ def alta_de_usuario(ruta):
             
             print(f"\nUsuario creado con éxito. Tu ID es: {id_usuario}")
             
-            usuarios_merge.write(f"{id_usuario},{nombre} {apellido},{año_de_nacimiento},\n")
+            usuarios.write(f"{id_usuario},{nombre} {apellido},{año_de_nacimiento},\n")
 
             seguir = input(f"\n¿Querés seguir creando usuarios? (s/n): ")
     return
 
 def baja_de_usuario():
-    with open(f'{ruta}usuarios_merge.csv', 'r+') as usuarios_merge:
-        baja_exitosa = False
-        print("\n--- Baja de usuario ---")
-        id_baja = input('Ingrese el ID de usuario: ')
-        lista_usuarios = usuarios_merge.readlines()
-        for linea in lista_usuarios:
-            if id_baja in linea:
-                baja_exitosa = True
-                lista_usuarios.remove(linea)
-        usuarios_merge.truncate(0)
-        usuarios_merge.seek(0)
-        usuarios_merge.writelines(lista_usuarios)
+    lista_usuarios = ordenar(ruta, "usuarios.csv")
+    baja_exitosa = False
+    print("\n--- Baja de usuario ---")
+    id_baja = input('Ingrese el ID de usuario: ')
+    for linea in lista_usuarios:
+        if id_baja in linea:
+            baja_exitosa = True
+            lista_usuarios.remove(linea)
 
-        if baja_exitosa:
-            print(f'\nUsuario {id_baja} dado de baja con éxito.\n')
-        else:
-            print(f'\nEl usuario {id_baja} no existe en la base de datos.\n')
+    if baja_exitosa:
+        lista_a_archivo(ruta, "usuarios.csv", lista_usuarios)
+        print(f'\nUsuario {id_baja} dado de baja con éxito.\n')
+    else:
+        print(f'\nEl usuario {id_baja} no existe en la base de datos.\n')
     return
 
 def ordenar(ruta, archivo):
@@ -214,7 +219,7 @@ def ordenar(ruta, archivo):
     return lista_id_ordenados
 
 def listar_por_id(lista_id_ordenados):
-    if hay_usuarios(ruta,"usuarios_merge.csv"):
+    if hay_usuarios(ruta,"usuarios.csv"):
         nombre_mas_largo = max(lista_id_ordenados, key=lambda i: len(i[1]))[1] # Devuelve el nombre más largo de la lista
         print(' Lista de usuarios '.center(31 + max(len(nombre_mas_largo) + 2, 22), '-'))
         print('ID Usuario'.ljust(14) + 'Nombre y Apellido'.ljust(max(len(nombre_mas_largo) + 2, 22)) + 'Año de Nacimiento\n')
@@ -227,9 +232,14 @@ def listar_por_id(lista_id_ordenados):
 
 def lista_a_archivo(ruta, archivo, lista_id_ordenados):
     with open(f'{ruta}{archivo}','w') as usuarios_ordenado:
-        
         for i in range(len(lista_id_ordenados)):
             usuarios_ordenado.write(f"{lista_id_ordenados[i][0]},{lista_id_ordenados[i][1]},{lista_id_ordenados[i][2]},{lista_id_ordenados[i][3]}\n")
+    return
+
+def lista_a_archivo_bin(ruta, archivo, lista_peliculas):
+    with open(f'{ruta}{archivo}','wb') as peliculas:
+        for i in range(len(lista_peliculas)):
+            pickle.dump(lista_peliculas[i], peliculas)
     return
 
 def hay_usuarios(ruta, archivo):
@@ -238,14 +248,110 @@ def hay_usuarios(ruta, archivo):
         bool_hay_usuarios = 0 != archivo_usuarios.tell()
     return bool_hay_usuarios
     
-def peliculas():
+def submenu_peliculas():
+    print("\n--- Peliculas ---\n")
+    print("1. Dar de alta una pelicula")
+    print("2. Dar de baja una pelicula")
+    print("3. Listar las películas por puntaje")
+    print("4. Listar las películas ordenadas por género y por director")
+    print("5. Asignar una película a un usuario")
+    print("6. Volver al menú principal")
+    opcion = int(input(f"\nIngrese una opción: "))
+    return opcion
+
+def peliculas(opcion, ruta):
+    if(opcion == 1):
+        alta_de_pelicula(ruta)
+        peliculas(submenu_peliculas(), ruta)
+    elif(opcion == 2):
+        lista_a_archivo_bin(ruta, "peliculas.txt", baja_de_pelicula(ruta))
+        peliculas(submenu_peliculas(), ruta)
+    elif(opcion == 3):
+        print('\nGenerando lista...\n')
+        listar_pelicula_puntaje()
+        peliculas(submenu_peliculas(), ruta)
+    elif(opcion == 4):
+        print('\nGenerando lista...\n')
+        listar_pelicula_gen()
+        peliculas(submenu_peliculas(), ruta)
+    elif(opcion == 5):
+        asignar_pelicula_usuario()
+        peliculas(submenu_peliculas(), ruta)
+    elif(opcion != 6):
+        print(f"\nIngrese una opción del 1 al 5")
+        peliculas(submenu_peliculas(), ruta)
+    return
+
+def alta_de_pelicula(ruta):
+    generos = {1:"drama", 2:"comedia", 3:"terror", 4:"suspenso", 5:"accion", 6:"romantica"}
+    with open(f'{ruta}peliculas.txt','ab') as archivo_peliculas:
+        seguir = "s"
+        while seguir == "s":
+            print("\n--- Alta de película ---")
+            titulo = input(f"Ingrese título: ")
+            if titulo[0].islower():
+                titulo = titulo.capitalize()
+            director_nombre = input(f"Ingrese nombre del director: ")
+            if director_nombre[0].islower():
+                director_nombre = director_nombre.capitalize()
+            director_apellido = input(f"Ingrese apellido del director: ")
+            if director_apellido[0].islower():
+                director_apellido = director_apellido.capitalize()
+            director = director_nombre + director_apellido
+            print("Elija el genero:")
+            print("1. Drama")
+            print("2. Comedia")
+            print("3. Terror")
+            print("4. Suspenso")
+            print("5. Acción")
+            print("6. Romantica")
+            opcion = int(input("\nIngrese genero: "))
+            genero = generos[opcion]
+            puntaje = int(input("Ingrese puntaje del 1 al 9: "))
+
+            id_pelicula = str(hash(titulo) % (10 ** 8))
+            
+            pelicula = [id_pelicula, titulo, director, genero, puntaje]
+            pickle.dump(pelicula, archivo_peliculas)
+            
+            print(f"\nPelicula cargada con éxito. ID de pelicula: {id_pelicula}")
+            seguir = input(f"\n¿Querés seguir cargando peliculas? (s/n): ")
+    return
+
+def baja_de_pelicula(ruta):
+    with open(f'{ruta}peliculas.txt','r+b') as archivo_peliculas:
+        lista_peliculas = []
+        while [" "," "," "," "," "] not in lista_peliculas:
+            lista_peliculas += [leer_info_bin(archivo_peliculas)]
+
+        print("\n--- Baja de pelicula ---")
+        id_baja = input('Ingrese el ID de pelicula: ')
+        baja_exitosa = False     
+        for linea in lista_peliculas:
+            if id_baja == linea[0]:
+                baja_exitosa = True
+                lista_peliculas.remove(linea)
+        if baja_exitosa:
+            print(f'\nPelicula {id_baja} dado de baja con éxito.\n')
+        else:
+            print(f'\nLa pelicula {id_baja} no existe en la base de datos.\n')
+            
+    return lista_peliculas
+
+def listar_pelicula_puntaje():
+    return None
+
+def listar_pelicula_gen():
+    return None
+
+def asignar_pelicula_usuario():
     return None
 
 def recomendaciones():
     return None
 
 #------- Bloque de inicio -------#
-if not os.path.exists(f"{ruta}usuarios_1.csv") and not os.path.exists(f"{ruta}usuarios_merge.csv"):
-    usuarios_merge = open(f"{ruta}usuarios_merge.csv", "w")
-    usuarios_merge.close()
+if not os.path.exists(f"{ruta}usuarios_1.csv") and not os.path.exists(f"{ruta}usuarios.csv"):
+    usuarios = open(f"{ruta}usuarios.csv", "w")
+    usuarios.close()
 menu(mostrar_menu(), ruta)
