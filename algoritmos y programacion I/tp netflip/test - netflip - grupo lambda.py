@@ -12,6 +12,14 @@ def leer_info(usuario):
         registro = ['999zz99','','',''] # Condición de salida del while
     return registro
 
+def leer_info_bin(peliculas):
+    try:
+        linea = pickle.load(peliculas)
+        registro = linea
+    except EOFError:
+        registro = [" "," "," "," "," "] # Condición de salida del while
+    return registro
+
 def mostrar_menu():
     print(f"\n--- Menú Principal ---\n")
     print("1. Usuarios")
@@ -26,7 +34,7 @@ def menu(opcion, ruta):
         usuarios(submenu_usuarios(), ruta)
         menu(mostrar_menu(), ruta)
     elif(opcion == 2):
-        peliculas()
+        peliculas(submenu_peliculas(), ruta)
         menu(mostrar_menu(), ruta)
     elif(opcion == 3):
         recomendaciones()
@@ -55,7 +63,7 @@ def usuarios(opcion, ruta):
         lista_a_archivo(ruta, "usuarios.csv", ordenar(ruta, "usuarios.csv"))
         usuarios(submenu_usuarios(), ruta)
     elif(opcion == 3):
-        baja_de_usuario()
+        lista_a_archivo(ruta, "usuarios.csv", baja_de_usuario())
         usuarios(submenu_usuarios(), ruta)
     elif(opcion == 4):
         print('\nGenerando lista...\n')
@@ -177,24 +185,20 @@ def alta_de_usuario(ruta):
     return
 
 def baja_de_usuario():
-    with open(f'{ruta}usuarios.csv', 'r+') as usuarios:
-        baja_exitosa = False
-        print("\n--- Baja de usuario ---")
-        id_baja = input('Ingrese el ID de usuario: ')
-        lista_usuarios = usuarios.readlines()
-        for linea in lista_usuarios:
-            if id_baja in linea:
-                baja_exitosa = True
-                lista_usuarios.remove(linea)
-        usuarios.truncate(0)
-        usuarios.seek(0)
-        usuarios.writelines(lista_usuarios)
+    lista_usuarios = ordenar(ruta, "usuarios.csv")
+    baja_exitosa = False
+    print("\n--- Baja de usuario ---")
+    id_baja = input('Ingrese el ID de usuario: ')
+    for linea in lista_usuarios:
+        if id_baja in linea:
+            baja_exitosa = True
+            lista_usuarios.remove(linea)
 
-        if baja_exitosa:
-            print(f'\nUsuario {id_baja} dado de baja con éxito.\n')
-        else:
-            print(f'\nEl usuario {id_baja} no existe en la base de datos.\n')
-    return
+    if baja_exitosa:
+        print(f'\nUsuario {id_baja} dado de baja con éxito.\n')
+    else:
+        print(f'\nEl usuario {id_baja} no existe en la base de datos.\n')
+    return lista_usuarios
 
 def ordenar(ruta, archivo):
     with open(f'{ruta}{archivo}','r+') as usuarios_ordenado:
@@ -227,9 +231,14 @@ def listar_por_id(lista_id_ordenados):
 
 def lista_a_archivo(ruta, archivo, lista_id_ordenados):
     with open(f'{ruta}{archivo}','w') as usuarios_ordenado:
-        
         for i in range(len(lista_id_ordenados)):
             usuarios_ordenado.write(f"{lista_id_ordenados[i][0]},{lista_id_ordenados[i][1]},{lista_id_ordenados[i][2]},{lista_id_ordenados[i][3]}\n")
+    return
+
+def lista_a_archivo_bin(ruta, archivo, lista_peliculas):
+    with open(f'{ruta}{archivo}','wb') as peliculas:
+        for i in range(len(lista_peliculas)):
+            pickle.dump(lista_peliculas[i], peliculas)
     return
 
 def hay_usuarios(ruta, archivo):
@@ -238,7 +247,105 @@ def hay_usuarios(ruta, archivo):
         bool_hay_usuarios = 0 != archivo_usuarios.tell()
     return bool_hay_usuarios
     
-def peliculas():
+def submenu_peliculas():
+    print("\n--- Peliculas ---\n")
+    print("1. Dar de alta una pelicula")
+    print("2. Dar de baja una pelicula")
+    print("3. Listar las películas por puntaje")
+    print("4. Listar las películas ordenadas por género y por director")
+    print("5. Asignar una película a un usuario")
+    print("6. Volver al menú principal")
+    opcion = int(input(f"\nIngrese una opción: "))
+    return opcion
+
+def peliculas(opcion, ruta):
+    if(opcion == 1):
+        alta_de_pelicula(ruta)
+        peliculas(submenu_peliculas(), ruta)
+    elif(opcion == 2):
+        lista_a_archivo_bin(ruta, "peliculas.txt", baja_de_pelicula(ruta))
+        peliculas(submenu_peliculas(), ruta)
+    elif(opcion == 3):
+        print('\nGenerando lista...\n')
+        listar_pelicula_puntaje()
+        peliculas(submenu_peliculas(), ruta)
+    elif(opcion == 4):
+        print('\nGenerando lista...\n')
+        listar_pelicula_gen()
+        peliculas(submenu_peliculas(), ruta)
+    elif(opcion == 5):
+        asignar_pelicula_usuario()
+        peliculas(submenu_peliculas(), ruta)
+    elif(opcion != 6):
+        print(f"\nIngrese una opción del 1 al 5")
+        peliculas(submenu_peliculas(), ruta)
+    return
+
+def alta_de_pelicula(ruta):
+    generos = {1:"Drama", 2:"Comedia", 3:"Terror", 4:"Suspenso", 5:"Accion", 6:"Romantica"}
+    with open(f'{ruta}peliculas.txt','ab') as archivo_peliculas:
+        seguir = "s"
+        while seguir == "s":
+            print("\n--- Alta de película ---")
+            titulo = input(f"Ingrese título: ")
+            if titulo[0].islower():
+                titulo = titulo.capitalize()
+            director_nombre = input(f"Ingrese nombre del director: ")
+            if director_nombre[0].islower():
+                director_nombre = director_nombre.capitalize()
+            director_apellido = input(f"Ingrese apellido del director: ")
+            if director_apellido[0].islower():
+                director_apellido = director_apellido.capitalize()
+            director = director_nombre + " " + director_apellido
+            print("\nElija el género:")
+            print("1. Drama")
+            print("2. Comedia")
+            print("3. Terror")
+            print("4. Suspenso")
+            print("5. Acción")
+            print("6. Romantica")
+            opcion = int(input("\nIngrese género: "))
+            genero = generos[opcion]
+            puntaje = int(input("Ingrese un puntaje del 1 al 9: "))
+            while 1 > puntaje or puntaje > 9:
+                puntaje = int(input("Por favor ingrese un número del 1 al 9: "))
+
+            id_pelicula = str(hash(titulo) % (10 ** 8))
+            
+            pelicula = [id_pelicula, titulo, director, genero, puntaje]
+            pickle.dump(pelicula, archivo_peliculas)
+            
+            print(f"\nPelicula cargada con éxito.\nID: {id_pelicula}\nTítulo: {titulo}\nDirector: {director}\nGénero: {genero}\nPuntaje: {puntaje}")
+            seguir = input(f"\n¿Querés seguir cargando peliculas? (s/n): ")
+    return
+
+def baja_de_pelicula(ruta):
+    with open(f'{ruta}peliculas.txt','r+b') as archivo_peliculas:
+        lista_peliculas = []
+        while [" "," "," "," "," "] not in lista_peliculas:
+            lista_peliculas += [leer_info_bin(archivo_peliculas)]
+
+        print("\n--- Baja de pelicula ---")
+        id_baja = input('Ingrese el ID de pelicula: ')
+        baja_exitosa = False     
+        for linea in lista_peliculas:
+            if id_baja == linea[0]:
+                baja_exitosa = True
+                lista_peliculas.remove(linea)
+        if baja_exitosa:
+            print(f'\nPelicula {id_baja} dada de baja con éxito.\n')
+        else:
+            print(f'\nLa pelicula {id_baja} no existe en la base de datos.\n')
+            
+    return lista_peliculas
+
+def listar_pelicula_puntaje():
+    return None
+
+def listar_pelicula_gen():
+    return None
+
+def asignar_pelicula_usuario():
     return None
 
 def recomendaciones():
