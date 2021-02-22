@@ -34,18 +34,18 @@ def mostrar_menu():
     return int(input(f"\nIngrese una opción: "))
 
 
-def menu(opcion, ruta):
+def menu(opcion):
     if(opcion == 1):
-        submenu_usuarios(mostrar_submenu_usuarios(), ruta)
+        submenu_usuarios(mostrar_submenu_usuarios())
     elif(opcion == 2):
-        submenu_peliculas(mostrar_submenu_peliculas(), ruta)
+        submenu_peliculas(mostrar_submenu_peliculas())
     elif(opcion == 3):
-        submenu_recomendaciones(mostrar_submenu_recomendaciones(), ruta)
+        submenu_recomendaciones(mostrar_submenu_recomendaciones())
     elif(opcion == 4):
         return
     else:
         print(f"\nIngrese una opción del 1 al 4")
-    menu(mostrar_menu(), ruta)
+    menu(mostrar_menu())
     return
 
 
@@ -59,9 +59,9 @@ def mostrar_submenu_usuarios():
     return int(input(f"\nIngrese una opción: "))
 
 
-def submenu_usuarios(opcion, ruta):
+def submenu_usuarios(opcion):
     if(opcion == 1):
-        merge_usuarios(ruta)
+        merge_usuarios()
     elif(opcion == 2):
         alta_de_usuario()
         lista_a_archivo(archivo_usuarios, ordenar(archivo_usuarios))
@@ -74,11 +74,11 @@ def submenu_usuarios(opcion, ruta):
         return
     else:
         print(f"\nIngrese una opción del 1 al 5")
-    submenu_usuarios(mostrar_submenu_usuarios(), ruta)
+    submenu_usuarios(mostrar_submenu_usuarios())
     return
 
 
-def merge_usuarios(ruta):
+def merge_usuarios():
     errores = False
     try:
         usuarios_1 = open(f'{ruta}usuarios_1.csv', 'r')
@@ -176,7 +176,7 @@ def merge_usuarios(ruta):
 
 def alta_de_usuario():
     if not os.path.exists(archivo_usuarios):
-        merge_usuarios(ruta)
+        merge_usuarios()
 
     with open(archivo_usuarios, 'a') as usuarios:
         seguir = "s"
@@ -292,13 +292,6 @@ def binario_a_lista(archivo):
     return lista
 
 
-def hay_usuarios(archivo_usuarios):
-    with open(archivo_usuarios, "r") as usuarios:
-        leer_archivo(usuarios)
-        bool_hay_usuarios = 0 != usuarios.tell()
-    return bool_hay_usuarios
-
-
 def mostrar_submenu_peliculas():
     print("\n--- Peliculas ---\n")
     print("1. Dar de alta una pelicula")
@@ -310,7 +303,7 @@ def mostrar_submenu_peliculas():
     return int(input(f"\nIngrese una opción: "))
 
 
-def submenu_peliculas(opcion, ruta):
+def submenu_peliculas(opcion):
     if(opcion == 1):
         alta_de_pelicula()
     elif(opcion == 2):
@@ -327,7 +320,7 @@ def submenu_peliculas(opcion, ruta):
         return
     else:
         print(f"\nIngrese una opción del 1 al 5")
-    submenu_peliculas(mostrar_submenu_peliculas(), ruta)
+    submenu_peliculas(mostrar_submenu_peliculas())
     return
 
 
@@ -348,14 +341,14 @@ def alta_de_pelicula():
         if director_apellido[0].islower():
             director_apellido = director_apellido.capitalize()
         director = director_apellido + ', ' + director_nombre
-        print("Elija el genero:")
+        print("Elija el género:")
         print("1. Drama")
         print("2. Comedia")
         print("3. Terror")
         print("4. Suspenso")
         print("5. Acción")
         print("6. Romantica")
-        opcion = int(input("\nIngrese genero: "))
+        opcion = int(input("\nIngrese género: "))
         tupla_genero = (opcion, generos[opcion])
         puntaje = int(input("Ingrese puntaje del 1 al 9: "))
         vistas = 0
@@ -375,7 +368,7 @@ def alta_de_pelicula():
         print(f'Género: {tupla_genero[1].capitalize()}')
         print(f'Puntaje: {puntaje}/9')
 
-        seguir = input(f"\n¿Querés seguir cargando peliculas? (s/n): ")
+        seguir = input(f"\n¿Querés seguir cargando películas? (s/n): ")
     lista_a_binario(archivo_peliculas, lista_peliculas)
     return
 
@@ -487,7 +480,7 @@ def asignar_pelicula_usuario():
                     usuario = usuario.capitalize()
             elif opcion == '2':
                 usuario = str(input('Ingrese el ID del usuario: '))
-            with open(f'{ruta}usuarios.csv', 'r') as usuarios_anterior:
+            with open(archivo_usuarios, 'r') as usuarios_anterior:
                 with open(f'{ruta}usuarios_nuevo.csv', 'w') as usuarios_nuevo:
                     id_usuario, nombre, año_nacimiento, peliculas = leer_archivo(
                         usuarios_anterior)
@@ -507,8 +500,8 @@ def asignar_pelicula_usuario():
                             f'{id_usuario},{nombre},{año_nacimiento},{peliculas}\n')
                         id_usuario, nombre, año_nacimiento, peliculas = leer_archivo(
                             usuarios_anterior)
-            os.remove(f'{ruta}usuarios.csv')
-            os.rename(f'{ruta}usuarios_nuevo.csv', f'{ruta}usuarios.csv')
+            os.remove(archivo_usuarios)
+            os.rename(f'{ruta}usuarios_nuevo.csv', archivo_usuarios)
     lista_a_binario(archivo_peliculas, lista_peliculas)
     if not existe_pelicula:
         pantalla_en_espera(
@@ -527,13 +520,13 @@ def asignar_pelicula_usuario():
 
 def mostrar_submenu_recomendaciones():
     print("\n--- Recomendaciones ---\n")
-    print("1. Recomendar las 5 más vistas")
-    print("2. Recomendar segun la ultima vista")
+    print("1. Ver las 5 más vistas según género")
+    print("2. Recomendar según la última película vista")
     print("3. Volver al menú principal")
     return int(input(f"\nIngrese una opción: "))
 
 
-def submenu_recomendaciones(opcion, ruta):
+def submenu_recomendaciones(opcion):
     if(opcion == 1):
         cinco_mas_vistas()
     elif(opcion == 2):
@@ -542,7 +535,7 @@ def submenu_recomendaciones(opcion, ruta):
         return
     else:
         print(f"\nIngrese una opción del 1 al 3")
-    submenu_recomendaciones(mostrar_submenu_recomendaciones(), ruta)
+    submenu_recomendaciones(mostrar_submenu_recomendaciones())
     return
 
 
@@ -557,14 +550,14 @@ def cinco_mas_vistas():
 def filtrar_por_genero():
     generos = {1: "drama", 2: "comedia", 3: "terror",
                4: "suspenso", 5: "accion", 6: "romantica"}
-    print("Elija el genero:")
+    print("Elija el género:")
     print("1. Drama")
     print("2. Comedia")
     print("3. Terror")
     print("4. Suspenso")
     print("5. Acción")
-    print("6. Romantica")
-    opcion = int(input("\nIngrese genero: "))
+    print("6. Romántica")
+    opcion = int(input("\nIngrese género: "))
     tupla_genero = (opcion, generos[opcion])
     lista_peliculas = binario_a_lista(archivo_peliculas)
     lista_por_genero = []
@@ -654,9 +647,9 @@ def main():
         print('La base de datos de usuarios está vacía. \nDebe dar de alta al menos un usuario antes de elegir otras opciones.')
         pantalla_en_espera()
     elif os.path.exists(f"{ruta}usuarios_1.csv") and not os.path.exists(archivo_usuarios):
-        print('Se encontró al menos un archivo de usuarios sin cargar en la base de datos. \nDebe realizar un merge para que el programa funcione correctamente.')
+        print('\nSe encontró al menos un archivo de usuarios sin cargar en la base de datos. \nDebe realizar un merge para que el programa funcione correctamente.')
         pantalla_en_espera()
-    menu(mostrar_menu(), ruta)
+    menu(mostrar_menu())
     return
 
 #------- Bloque de inicio -------#
