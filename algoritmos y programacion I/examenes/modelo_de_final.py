@@ -10,7 +10,7 @@ puede haber mas de un registro.
 
 Se pide hacer un programa modularizado en Python que, leyendo una sola vez cada archivo:
 
-a) Genere un archivo unificado conservando el orden (a igual di­a y numero de caja guardar primero los de la sucursal 1).
+a) Genere un archivo unificado conservando el orden (a igual di­a y numero de caja guardar primero los de la sucursal 1). Listo
 
 b) En base al archivo generado en el punto anterior y sin utilizar estructuras adicionales, 
 imprima un informe indicando los totales diarios:
@@ -19,8 +19,8 @@ Dia DD: monto recaudado: XXX
 
 c) Indique el legajo del vendedor que mas recaudo (para este punto se pueden utilizar estructuras auxiliares).
 """
-#constantes
-MAX_DIA = 999
+# constantes
+MAX_DIA = "999"
 
 
 def leer_archivo(archivo):
@@ -28,14 +28,8 @@ def leer_archivo(archivo):
     if linea:
         registro = linea.rstrip('\n').split(',')
     else:
-        registro = [MAX_DIA,'','',''] # Condición de salida del while
+        registro = [MAX_DIA, '', '', '']  # Condición de salida del while
     return registro
-
-
-def while_variable(dia, caja, legajo, monto, archivo):
-    while dia == dia_menor and dia != MAX_DIA:
-        dia, caja, legajo, monto = leer_archivo(archivo)
-    return dia, caja, legajo, monto
 
 
 def merge_archivos():
@@ -46,13 +40,63 @@ def merge_archivos():
     dia_1, caja_1, legajo_1, monto_1 = leer_archivo(ventas_1)
     dia_2, caja_2, legajo_2, monto_2 = leer_archivo(ventas_2)
 
-    while dia_1 < MAX_DIA or dia_2 < MAX_DIA:
+    while dia_1 != MAX_DIA or dia_2 != MAX_DIA:
+
         dia_menor = min(dia_1, dia_2)
-        
-        while dia_1 == dia_2:
+        caja_menor = min(caja_1, caja_2)
+
+        while dia_1 == dia_menor and caja_1 == caja_menor:
+            ventas.write(dia_1 + "," + caja_1 + "," + legajo_1 + "," + monto_1 + "\n")
+            dia_1, caja_1, legajo_1, monto_1 = leer_archivo(ventas_1)
+
+        while dia_2 == dia_menor and caja_2 == caja_menor:
+            ventas.write(dia_2 + "," + caja_2 + "," + legajo_2 + "," + monto_2 + "\n")
+            dia_2, caja_2, legajo_2, monto_2 = leer_archivo(ventas_2)
+
+        while dia_1 == dia_menor and caja_1 > caja_menor:
+            ventas.write(dia_1 + "," + caja_1 + "," + legajo_1 + "," + monto_1 + "\n")
+            dia_1, caja_1, legajo_1, monto_1 = leer_archivo(ventas_1)
+
+        while dia_2 == dia_menor and caja_2 > caja_menor:
+            ventas.write(dia_2 + "," + caja_2 + "," + legajo_2 + "," + monto_2 + "\n")
+            dia_2, caja_2, legajo_2, monto_2 = leer_archivo(ventas_2)
+
+    ventas_1.close
+    ventas_2.close
+    ventas.close
+
+
+def totales_diarios():
+    ventas = open(
+        "C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\examenes\\ventas.csv", "r")
+
+    dia, caja, legajo, monto = leer_archivo(ventas)
+    dicc_legajos = {legajo: 0}
+
+    while dia != MAX_DIA:
+        dia_menor = dia
+        monto_recaudado = 0
+
+        while dia == dia_menor:
+            monto_recaudado += int(monto)
+            if legajo in dicc_legajos:
+                dicc_legajos[legajo] += int(monto)
+            else:
+                dicc_legajos[legajo] = int(monto)
             
-            ventas.write()
+            dia, caja, legajo, monto = leer_archivo(ventas)
+            
+        print(f"\nDia {dia_menor}: monto recaudado: {monto_recaudado}")
 
-        
+    print("\nEl legajo que más recaudó fue el:")
+    print(max(dicc_legajos))
 
-        
+    ventas.close
+
+
+def main():
+    merge_archivos()
+    totales_diarios()
+
+
+main()
