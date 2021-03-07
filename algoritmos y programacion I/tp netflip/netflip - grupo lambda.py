@@ -110,27 +110,30 @@ def mostrar_menu():
     print("2. Películas")
     print("3. Recomendaciones")
     print("4. Salir")
-    return int(ingresar_opcion("\nIngrese una opción: "))
+    return ingresar_opcion("\nIngrese una opción: ")
 
 
 def menu(opcion):
-    if(opcion == 1):
+    while opcion != "4":
+        while opcion not in ("1", "2", "3", "4"):
+            mostrar_error("\nOpción inválida, ingrese una opción del 1 al 4")
+            opcion = ingresar_opcion("\nIngrese una opción: ")
+        if(opcion == "1"):
+            limpiar_pantalla()
+            submenu_usuarios(mostrar_submenu_usuarios())
+        elif(opcion == "2"):
+            limpiar_pantalla()
+            submenu_peliculas(mostrar_submenu_peliculas())
+        elif(opcion == "3"):
+            limpiar_pantalla()
+            submenu_recomendaciones(mostrar_submenu_recomendaciones())
+        else:
+            print(f"\n{Fore.LIGHTBLUE_EX}Cerrando programa...{Style.RESET_ALL}")
+            sleep(1)
+            return
         limpiar_pantalla()
-        submenu_usuarios(mostrar_submenu_usuarios())
-    elif(opcion == 2):
-        limpiar_pantalla()
-        submenu_peliculas(mostrar_submenu_peliculas())
-    elif(opcion == 3):
-        limpiar_pantalla()
-        submenu_recomendaciones(mostrar_submenu_recomendaciones())
-    elif(opcion == 4):
-        print(f"\n{Fore.LIGHTBLUE_EX}Cerrando programa...{Style.RESET_ALL}")
-        sleep(1)
-        return
-    else:
-        mostrar_error("\nIngrese una opción del 1 al 4")
-    menu(mostrar_menu())
-    return
+        opcion = mostrar_menu()
+
 
 
 def mostrar_submenu_usuarios():
@@ -140,32 +143,34 @@ def mostrar_submenu_usuarios():
     print("3. Dar de baja un usuario")
     print("4. Listar usuarios por ID")
     print("5. Volver al menú principal")
-    return int(ingresar_opcion("\nIngrese una opción: "))
+    return ingresar_opcion("\nIngrese una opción: ")
 
 
 def submenu_usuarios(opcion):
-    if(opcion == 1):
+    while opcion != "5":
+        while opcion not in ("1", "2", "3", "4", "5"):
+            mostrar_error("\nOpción inválida, ingrese una opción del 1 al 5")
+            opcion = ingresar_opcion("\nIngrese una opción: ")
+        if(opcion == "1"):
+            limpiar_pantalla()
+            merge_usuarios()
+        elif(opcion == "2"):
+            limpiar_pantalla()
+            alta_de_usuario()
+            lista_a_archivo(archivo_usuarios, ordenar(archivo_usuarios))
+        elif(opcion == "3"):
+            limpiar_pantalla()
+            baja_de_usuario()
+        elif(opcion == "4"):
+            print(f'\n{Fore.LIGHTBLUE_EX}Generando lista...{Style.RESET_ALL}\n')
+            sleep(1)
+            limpiar_pantalla()
+            listar_por_id(ordenar(archivo_usuarios))
+        else:
+            limpiar_pantalla()
+            return
         limpiar_pantalla()
-        merge_usuarios()
-    elif(opcion == 2):
-        limpiar_pantalla()
-        alta_de_usuario()
-        lista_a_archivo(archivo_usuarios, ordenar(archivo_usuarios))
-    elif(opcion == 3):
-        limpiar_pantalla()
-        baja_de_usuario()
-    elif(opcion == 4):
-        print(f'\n{Fore.LIGHTBLUE_EX}Generando lista...{Style.RESET_ALL}\n')
-        sleep(1)
-        limpiar_pantalla()
-        listar_por_id(ordenar(archivo_usuarios))
-    elif(opcion == 5):
-        limpiar_pantalla()
-        return
-    else:
-        mostrar_error("\nIngrese una opción del 1 al 5")
-    submenu_usuarios(mostrar_submenu_usuarios())
-    return
+        opcion = mostrar_submenu_usuarios()
 
 
 def merge_usuarios():
@@ -437,36 +442,38 @@ def mostrar_submenu_peliculas():
     print("4. Listar las películas ordenadas por género y por director")
     print("5. Asignar una película a un usuario")
     print("6. Volver al menú principal")
-    return int(ingresar_opcion("\nIngrese una opción: "))
+    return ingresar_opcion("\nIngrese una opción: ")
 
 
 def submenu_peliculas(opcion):
-    if(opcion == 1):
+    while opcion != "6":
+        while opcion not in ("1", "2", "3", "4", "5", "6"):
+            mostrar_error("\nOpción inválida, ingrese una opción del 1 al 6")
+            opcion = ingresar_opcion("\nIngrese una opción: ")
+        if(opcion == "1"):
+            limpiar_pantalla()
+            alta_de_pelicula()
+        elif(opcion == "2"):
+            limpiar_pantalla()
+            baja_de_pelicula()
+        elif(opcion == "3"):
+            print(f'\n{Fore.LIGHTBLUE_EX}Generando lista...{Style.RESET_ALL}\n')
+            sleep(1)
+            limpiar_pantalla()
+            listar_pelicula_puntaje()
+        elif(opcion == "4"):
+            print(f'\n{Fore.LIGHTBLUE_EX}Generando lista...{Style.RESET_ALL}\n')
+            sleep(1)
+            limpiar_pantalla()
+            listar_pelicula_gen()
+        elif(opcion == "5"):
+            limpiar_pantalla()
+            asignar_pelicula_usuario()
+        else:
+            limpiar_pantalla()
+            return
         limpiar_pantalla()
-        alta_de_pelicula()
-    elif(opcion == 2):
-        limpiar_pantalla()
-        baja_de_pelicula()
-    elif(opcion == 3):
-        print(f'\n{Fore.LIGHTBLUE_EX}Generando lista...{Style.RESET_ALL}\n')
-        sleep(1)
-        limpiar_pantalla()
-        listar_pelicula_puntaje()
-    elif(opcion == 4):
-        print(f'\n{Fore.LIGHTBLUE_EX}Generando lista...{Style.RESET_ALL}\n')
-        sleep(1)
-        limpiar_pantalla()
-        listar_pelicula_gen()
-    elif(opcion == 5):
-        limpiar_pantalla()
-        asignar_pelicula_usuario()
-    elif(opcion == 6):
-        limpiar_pantalla()
-        return
-    else:
-        mostrar_error("\nIngrese una opción del 1 al 6")
-    submenu_peliculas(mostrar_submenu_peliculas())
-    return
+        opcion = mostrar_submenu_peliculas()
 
 
 def alta_de_pelicula():
@@ -697,23 +704,25 @@ def mostrar_submenu_recomendaciones():
     print("1. Ver las 5 más vistas según género")
     print("2. Recomendar según la última película vista")
     print("3. Volver al menú principal")
-    return int(ingresar_opcion("\nIngrese una opción: "))
+    return ingresar_opcion("\nIngrese una opción: ")
 
 
 def submenu_recomendaciones(opcion):
-    if(opcion == 1):
+    while opcion != "3":
+        while opcion not in ("1", "2", "3"):
+            mostrar_error("\nOpción inválida, ingrese una opción del 1 al 3")
+            opcion = ingresar_opcion("\nIngrese una opción: ")
+        if(opcion == "1"):
+            limpiar_pantalla()
+            cinco_mas_vistas()
+        elif(opcion == "2"):
+            limpiar_pantalla()
+            recomendacion_ultima_pelicula()
+        else:
+            limpiar_pantalla()
+            return
         limpiar_pantalla()
-        cinco_mas_vistas()
-    elif(opcion == 2):
-        limpiar_pantalla()
-        recomendacion_ultima_pelicula()
-    elif(opcion == 3):
-        limpiar_pantalla()
-        return
-    else:
-        mostrar_error("\nIngrese una opción del 1 al 3")
-    submenu_recomendaciones(mostrar_submenu_recomendaciones())
-    return
+        opcion = mostrar_submenu_recomendaciones()
 
 
 def cinco_mas_vistas():
