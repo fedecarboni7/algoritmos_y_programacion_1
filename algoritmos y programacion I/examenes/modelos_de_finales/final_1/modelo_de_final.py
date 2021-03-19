@@ -33,9 +33,9 @@ def leer_archivo(archivo):
 
 
 def merge_archivos():
-    ventas_1 = open("C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\examenes\\ventas_1.csv", "r")
-    ventas_2 = open("C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\examenes\\ventas_2.csv", "r")
-    ventas = open("C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\examenes\\ventas.csv", "w")
+    ventas_1 = open("C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\examenes\\modelos_de_finales\\final_1\\ventas_1.csv", "r")
+    ventas_2 = open("C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\examenes\\modelos_de_finales\\final_1\\ventas_2.csv", "r")
+    ventas = open("C:\\Users\\feden\\Documents\\Programación\\repositorios git\\fiuba\\algoritmos y programacion I\\examenes\\modelos_de_finales\\final_1\\ventas.csv", "w")
 
     dia_1, caja_1, legajo_1, monto_1 = leer_archivo(ventas_1)
     dia_2, caja_2, legajo_2, monto_2 = leer_archivo(ventas_2)
