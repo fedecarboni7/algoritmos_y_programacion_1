@@ -43,6 +43,7 @@ Marca de yerba (string), cantidad a comprar {número}"""
 from stock import stock_yerba
 
 MAX_OFI = "999"
+paquetes_a_comprar = {}
 
 def leer_archivo(archivo):
     linea = archivo.readline()
@@ -53,14 +54,18 @@ def leer_archivo(archivo):
     return registro
 
 def actualizar_stock():
-    consumos = open(r"C:\Users\feden\Documents\Programación\repositorios git\fiuba\algoritmos y programacion I\examenes\modelos_de_finales\final_3\consumos.csv", "r")
-    errores = open(r"C:\Users\feden\Documents\Programación\repositorios git\fiuba\algoritmos y programacion I\examenes\modelos_de_finales\final_3\errores.txt", "w")
+    consumos = open(r"C:\Users\federico.carboni\Desktop\FIUBA Repo\algoritmos y programacion I\examenes\modelos_de_finales\final_3\consumos.csv", "r")
+    errores = open(r"C:\Users\federico.carboni\Desktop\FIUBA Repo\algoritmos y programacion I\examenes\modelos_de_finales\final_3\errores.txt", "w")
 
     oficina, dia, yerba = leer_archivo(consumos)
 
     while oficina != MAX_OFI:
         if yerba in stock_yerba[int(oficina) - 1]:
             stock_yerba[int(oficina) - 1][yerba] -= 1
+            if yerba not in paquetes_a_comprar:
+                paquetes_a_comprar[yerba] = 1
+            else:
+                paquetes_a_comprar[yerba] += 1
         else:
             errores.write(f"Consumo invalido en la oficina Nro. {oficina} de yerba marca {yerba} el dia {dia}\n")
         oficina, dia, yerba = leer_archivo(consumos)
@@ -69,13 +74,20 @@ def actualizar_stock():
     errores.close()
 
 def imprimir_stock():
-    contador = 0
+    contador = 1
     for oficina in stock_yerba:
-        contador += 1
         print(f"Oficina Nro. {contador}: {oficina}")
+        contador += 1
+
+def archivo_compras():
+    compras = open(r"C:\Users\federico.carboni\Desktop\FIUBA Repo\algoritmos y programacion I\examenes\modelos_de_finales\final_3\compras.csv", "w")
+    for paquete in paquetes_a_comprar:
+        compras.write(f"Marca de yerba {paquete}, cantidad a comprar {paquetes_a_comprar[paquete]}\n")
+    compras.close()
 
 def main():
     actualizar_stock()
     imprimir_stock()
+    archivo_compras()
 
 main()
