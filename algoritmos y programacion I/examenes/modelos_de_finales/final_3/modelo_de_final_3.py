@@ -7,7 +7,7 @@ Se cuentan con el archivo CONSUMOS.CSV, totalmente desordenado, que tiene la sig
 Nro de oficina (número 1 hasta 23), día de apertura del paquete (string "DD"), marca de yerba
 (string)
 23,01,Amanda
-02,02, Verdeflor
+02,02,Verdeflor
 15,02,CBSé
 
 Por otro lado, el archivo stock.py contiene una lista con el stock inicial del mes para cada
@@ -39,3 +39,43 @@ marca de yerba basado en los consumos de todas las oficinas procesados, donde ca
 línea contenga:
 
 Marca de yerba (string), cantidad a comprar {número}"""
+
+from stock import stock_yerba
+
+MAX_OFI = "999"
+
+def leer_archivo(archivo):
+    linea = archivo.readline()
+    if linea:
+        registro = linea.rstrip("\n").split(",")
+    else:
+        registro = [MAX_OFI, "", ""]
+    return registro
+
+def actualizar_stock():
+    consumos = open(r"C:\Users\feden\Documents\Programación\repositorios git\fiuba\algoritmos y programacion I\examenes\modelos_de_finales\final_3\consumos.csv", "r")
+    errores = open(r"C:\Users\feden\Documents\Programación\repositorios git\fiuba\algoritmos y programacion I\examenes\modelos_de_finales\final_3\errores.txt", "w")
+
+    oficina, dia, yerba = leer_archivo(consumos)
+
+    while oficina != MAX_OFI:
+        if yerba in stock_yerba[int(oficina) - 1]:
+            stock_yerba[int(oficina) - 1][yerba] -= 1
+        else:
+            errores.write(f"Consumo invalido en la oficina Nro. {oficina} de yerba marca {yerba} el dia {dia}\n")
+        oficina, dia, yerba = leer_archivo(consumos)
+    
+    consumos.close()
+    errores.close()
+
+def imprimir_stock():
+    contador = 0
+    for oficina in stock_yerba:
+        contador += 1
+        print(f"Oficina Nro. {contador}: {oficina}")
+
+def main():
+    actualizar_stock()
+    imprimir_stock()
+
+main()
