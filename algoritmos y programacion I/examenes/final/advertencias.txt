@@ -1,0 +1,2 @@
+El gato: Tom del cliente con DNI: 12857290 fue vacunado despues de la fecha de vencimiento de su ultima vacuna
+El gato: Pelusa del cliente con DNI: 30083856 no fue vacunado en el 2021 todavia
