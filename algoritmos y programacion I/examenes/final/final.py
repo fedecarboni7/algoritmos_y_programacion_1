@@ -73,9 +73,9 @@ def imprimir_top_clientes():
     contador = 1
     lista_top_clientes = list(top_clientes.items())
     lista_top_clientes.sort(key= lambda cliente: cliente[1], reverse=True)
-    lista_top_clientes[0:16]
+    top_15 = lista_top_clientes[0:15]
     print(f"\nTop 15 de clientes")
-    for cliente in lista_top_clientes:
+    for cliente in top_15:
         print(f"{contador}. DNI {cliente[0]} gasto total: {cliente[1]}")
         contador += 1
 
