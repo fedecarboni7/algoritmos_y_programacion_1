@@ -1,0 +1,19 @@
+El gato: Tom del cliente con DNI: 12857290 fue vacunado despues de la fecha de vencimiento de su ultima vacuna
+El gato: Pelusa del cliente con DNI: 30083856 no fue vacunado en el 2021 todavia
+El gato: Gato7 del cliente con DNI: 21435728 no fue vacunado en el 2021 todavia
+El gato: Gato8 del cliente con DNI: 12441214 fue vacunado despues de la fecha de vencimiento de su ultima vacuna
+El gato: Gato8 del cliente con DNI: 12441214 no fue vacunado en el 2021 todavia
+El gato: Gato9 del cliente con DNI: 12134566 no fue vacunado en el 2021 todavia
+El gato: Gato10 del cliente con DNI: 12345162 no fue vacunado en el 2021 todavia
+El gato: Gato11 del cliente con DNI: 12345162 no fue vacunado en el 2021 todavia
+El gato: Gato12 del cliente con DNI: 12345162 no fue vacunado en el 2021 todavia
+El gato: Gato15 del cliente con DNI: 12525122 no fue vacunado en el 2021 todavia
+El gato: Gato16 del cliente con DNI: 12542122 no fue vacunado en el 2021 todavia
+El gato: Gato17 del cliente con DNI: 11525122 no fue vacunado en el 2021 todavia
+El gato: Gato18 del cliente con DNI: 52525122 no fue vacunado en el 2021 todavia
+El gato: Gato19 del cliente con DNI: 92525122 no fue vacunado en el 2021 todavia
+El gato: Gato20 del cliente con DNI: 62525122 no fue vacunado en el 2021 todavia
+El gato: Gato21 del cliente con DNI: 72525122 no fue vacunado en el 2021 todavia
+El gato: Gato22 del cliente con DNI: 82525122 no fue vacunado en el 2021 todavia
+El gato: Gato23 del cliente con DNI: 19525122 no fue vacunado en el 2021 todavia
+El gato: Gato24 del cliente con DNI: 70525122 no fue vacunado en el 2021 todavia
