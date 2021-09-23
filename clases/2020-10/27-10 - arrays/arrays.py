@@ -37,8 +37,9 @@ lista_vacia = []
 print(len(lista_vacia))
 
 #para acceder a partes de una lista
-print(lista[0:4])
-print(lista[2:])
+print(lista)
+print("Accedo del primer al quinto elemento:", lista[0:4])
+print("Accedo al último elemento:",lista[-1])
 
 #para eliminar un parte especifica de la lista
 lista3 = ["primer",1,2,3,4,5,6,7]
